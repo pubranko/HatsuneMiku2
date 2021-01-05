@@ -1,0 +1,23 @@
+{
+  "name": "001_RankoKoushin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "NODE_ENV=development webpack --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "NODE_ENV=development webpack --config=node_modules/laravel-mix/setup/webpack.config.js --watch",
+    "prod": "NODE_ENV=production  webpack --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync-webpack-plugin": "^2.3.0",
+    "laravel-mix": "^6.0.6",
+    "sass": "^1.32.0",
+    "sass-loader": "^8.0.2",
+    "ts-loader": "^8.0.13",
+    "typescript": "^4.1.3"
+  }
+}

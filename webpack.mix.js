@@ -1,5 +1,6 @@
 let mix = require('laravel-mix');
 
+mix.setResourceRoot('');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,7 +12,14 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('src/app.js', 'dist/').sass('src/app.scss', 'dist/');
+mix.ts('app/static/ts/main.ts', 'app/static');
+    //.sass('src/app.scss', 'dist/');
+
+
+// mix.js('resources/js/app.js', 'public/js')
+//    .sass('resources/sass/app.scss', 'public/css')
+//    .sass('resources/sass/member.scss', 'public/css');
+
 
 // Full API
 // mix.js(src, output);

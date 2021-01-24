@@ -1,5 +1,6 @@
 #仮想化(venv)のrkフォルダは除外
-venv/
+.venv/
+.vscode/
 #npm関連を除外
 node_modules/
 

@@ -6,6 +6,33 @@
   jnjya2側でテスト用のパーツを作ってみよう。ボタンで固定値でajaxをさせる。
 3.
 
+＜apiの仕様＞
+
+要素
+  検索フィールドの種類
+  検索値
+    文字列、日付なら範囲になるので複数、チェックボックスも複数あるかも。
+  オプション
+    not、フレーズ検索など、solrの機能
+  ページ番号
+  最大明細数
+  別ウィンドウか同じウィンドウかの情報
+
+  データ構造
+    検索条件(search-conditions)：solrで検索するクエリー。配列を結合すればクエリーになるイメージ。ただしフィールドセットの部分は辞書型で、チェックに使用する。
+    フィールドセット：どの項目、判定、値で検索するかを示す纏まり。
+      {field-set : {field : フィールド名,operator:演算子,value:値}
+
+  データ構造イメージ
+    {
+        search-conditions:[
+          (,{field-set},and,{field-set}),or,(,(,{field-set},and,{field-set},),or,{field-set}),
+        ],
+        page-number:99,
+        details-number:99,
+    
+    }
+
 
 
 form_controller.js時代の関数

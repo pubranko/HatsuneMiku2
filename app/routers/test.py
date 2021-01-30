@@ -6,6 +6,8 @@ from fastapi.templating import Jinja2Templates
 
 from models.SolrNewsClip import SolrNewsClip       #プロジェクト内モジュール
 from dependencies import get_token_header
+from pydantic import BaseModel      #pydantic：バリデーション
+from typing import Optional
 
 router = APIRouter(
     prefix="/test",
@@ -16,6 +18,11 @@ router = APIRouter(
 
 router.mount("/static", StaticFiles(directory="static"), name="static")    #テンプレート内部で"static"と記載した場合のパスを指定している？
 templates = Jinja2Templates(directory="templates")
+
+
+@router.get("/", response_class=HTMLResponse)
+async def test(request:Request):
+    return templates.TemplateResponse("test.html", {"request": request,})
 
 
 @router.get("/jinja2", response_class=HTMLResponse)  #戻り値(response)をjsonではなくhtmlにする場合は左記のようにレスポンスクラスを指定
@@ -37,3 +44,18 @@ async def testsolr():
     results_check = solr_news_clip.results_check(results)
     results_article_cut = solr_news_clip.article_cut(results_check)
     return results_article_cut
+
+
+class Item(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+    tax: Optional[float] = None
+
+
+@router.post("/ajax")
+async def testajax(item:Item):
+    print(type(item))
+    print(vars(item))
+    return item
+

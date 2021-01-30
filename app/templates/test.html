@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title> テスト</title>
+    {# リンクはこうなる href="/static/polls/style.css"#}
+    {#% load static %#}
+    <script type="application/javascript" src="{{ url_for('static', path='/form_controller.js') }}"></script>
+    <script type="application/javascript" src="{{ url_for('static', path='/main.js') }}"></script>
+
+</head>
+<body>
+{#% load static %#}
+{#<img src="{% static 'saikutu/images/〜〜.gif' %}" alt="画像を表示のつもり">#}
+
+<h4 >テスト！</h4>
+
+<div>
+    <input type="button" value="test1" onclick="test1()">
+    <input type="button" value="test2" onclick="test2()">
+    <input type="button" value="test3" onclick="test3()">
+</div>
+
+<h4>保管庫</h4>
+<p name="hokanko"></p>
+</body>

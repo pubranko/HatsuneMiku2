@@ -1,7 +1,15 @@
-import aaa = require("./_test")
-console.log(aaa.test1())
+/// <reference path="./test.ts">
 
-import * as bbb from './_test';
-console.log(bbb.test1());
+import * as _test from "./_test";
 
+interface Window { test1(): void;test2(): void; }
+declare var window: Window;
+window.test1 = () => {
+    console.log(_test.test1());
+};
 
+//interface Window { test2(): void; }
+//declare var window: Window;
+window.test2 = () => {
+    _test.test2();
+};

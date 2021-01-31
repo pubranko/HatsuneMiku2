@@ -19,17 +19,20 @@
   別ウィンドウか同じウィンドウかの情報
 
   データ構造
-    検索条件(search-conditions)：solrで検索するクエリー。配列を結合すればクエリーになるイメージ。ただしフィールドセットの部分は辞書型で、チェックに使用する。
+    検索条件(search_conditions)：solrで検索するクエリー。配列を結合すればクエリーになるイメージ。ただしフィールドセットの部分は辞書型で、チェックに使用する。
     フィールドセット：どの項目、判定、値で検索するかを示す纏まり。
-      {field-set : {field : フィールド名,operator:演算子,value:値}
+      {field_set : {field : フィールド名,range_flg:off,value1:値,}}
+      {field_set : {field : フィールド名,range_flg:on,value1:値,value2:値}}
+      {field : フィールド名,range_flg:off,value1:値,}
+      {field : フィールド名,range_flg:on,value1:値,value2:値}
 
   データ構造イメージ
     {
-        search-conditions:[
-          (,{field-set},and,{field-set}),or,(,(,{field-set},and,{field-set},),or,{field-set}),
+        search_conditions:[
+          (,{field_set},and,{field_set}),or,(,(,{field_set},and,{field_set},),or,{field_set}),
         ],
-        page-number:99,
-        details-number:99,
+        page_number:99,
+        details_number:99,
     
     }
 

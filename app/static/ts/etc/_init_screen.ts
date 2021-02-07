@@ -1,0 +1,13 @@
+///<reference path="../main.ts"/>
+
+import * as input_form_add from '../input/_input_form_add';
+
+/**初回の読み込み時に、入力フォームの1つ目を追加 。
+ * ただし検索結果を別のタブで開く場合は操作なし。
+*/
+
+export const init_screen = (): void => {
+    window.addEventListener("load", (e) => {
+        input_form_add.input_form_add(0)
+    });
+}

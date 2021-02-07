@@ -27,6 +27,10 @@ export function test2():void {
             //console.log(JSON.parse(xhr_request.responseText));
             console.log(xhr_request.responseType);
             console.log(xhr_request.response);
+            console.log(document.getElementsByClassName("hokanko"));
+            let get_hokanko_elem = document.getElementsByClassName("hokanko")[0];
+            let t = xhr_request.response['description'] + ' : ' + xhr_request.response['name'];
+            get_hokanko_elem.innerHTML = t;
         }
     }
 }

@@ -4,30 +4,33 @@
 {#% load static %#}
 {#<img src="{% static 'saikutu/images/〜〜.gif' %}" alt="画像を表示のつもり">#}
 
-<h4 >採掘しよう！</h4>
+<h4>採掘しよう！</h4>
 
 <div>
-    <fieldset><legend>コントロール</legend>
-    <form action="" method="GET" name="controller_form">
-        <input type="button" class="cls_control_button" value="グループ編集 on" 
-                name="group_control_mode_on" onclick="f_group_control_mode_on(document)">
-        <input type="button" class="cls_control_button" value="グループ編集 off" 
-                name="group_control_mode_off" onclick="f_group_control_mode_off(document)" hidden>
-        <input type="button" class="cls_control_button cls_group_add" value="グループ追加(and)" 
-                name="group_add_and" onclick="f_group_add(document,'and')" hidden disabled>
-        <input type="button" class="cls_control_button cls_group_add" value="グループ追加(or)" 
-                name="group_add_or" onclick="f_group_add(document,'or')" hidden disabled>
-        <br>
-    </form>
+    <fieldset>
+        <legend>コントロール</legend>
+        <form action="" method="GET" name="controller_form">
+            <input type="button" class="cls_control_button" value="グループ編集 on" name="group_control_mode_on"
+                onclick="f_group_control_mode_on(document)">
+            <input type="button" class="cls_control_button" value="グループ編集 off" name="group_control_mode_off"
+                onclick="f_group_control_mode_off(document)" hidden>
+            <input type="button" class="cls_control_button cls_group_add" value="グループ追加(and)" name="group_add_and"
+                onclick="f_group_add(document,'and')" hidden disabled>
+            <input type="button" class="cls_control_button cls_group_add" value="グループ追加(or)" name="group_add_or"
+                onclick="f_group_add(document,'or')" hidden disabled>
+            <br>
+        </form>
     </fieldset>
 
-    <fieldset class="cls_group cls_group_and" name="group_1"><legend>グループ1 (and結合)</legend>
-        <div class="cls_s cls_s0">
-            <input type="button" value="条件追加↓" class="cls_button_control1" onclick="f_input_form_add(document,0)">
-        </div>
-        <!--ここに各入力フォームを追加される。-->
-        <input type="checkbox" name="search_option_phrase" value="phrase_search">フレーズ検索on/off(まだ未実装)
-    </fieldset>
+    <div class="search_conditions_top">
+        <!--fieldset class="cls_group cls_group_and" name="group_1">
+            <legend>グループ1 (and結合)</legend>
+            <div class="cls_s cls_s0">
+                <input type="button" value="条件追加↓" class="cls_button_control1" onclick="f_input_form_add(document,0)">
+            </div>
+            <input type="checkbox" name="search_option_phrase" value="phrase_search">フレーズ検索on/off(まだ未実装)
+        </fieldset-->
+    </div>
     <form>
         <input type="button" value="検索(別タブで開く)" onclick="f_search_results_window(document)">
         <input type="button" value="検索" onclick="f_search_results_frame(document,1)">

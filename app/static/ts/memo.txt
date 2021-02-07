@@ -1,10 +1,43 @@
 どのように勧めていくか？
 
+
 1.api仕様を決めよう。
 2.ajaxを使って実際にjsonを取得する。
-　それを単純に表示させてみよう。
+  それを単純に表示させてみよう。
   jnjya2側でテスト用のパーツを作ってみよう。ボタンで固定値でajaxをさせる。
-3.
+
+4.イベントを考えよう
+  入力フォーム関連
+    追加・変更・削除・移動
+    検索項目の変更（本文や日付などの）
+  グループ関連
+    グループ対象の選択
+    グループ化
+  初画面表示
+
+5.フォルダ・ファイル構成を考えよう。
+  main.ts
+    etc(初画面表示)
+ok      init_screen.ts
+    input(入力フォームの追加・変更・削除・移動、入力フォームの値を取得・チェック・json生成)
+ok      input_form_add.ts
+      input_form_change.ts
+      input_form_delete.ts
+      input_form_move.ts
+1      input_get.ts
+2      input_check.ts
+3      input_json_create.ts
+    group(グループ化・解除)
+      grouping.ts
+      group_release.ts
+    search(ajaxでクエリーを送信・戻り値を画面へ反映)
+4      query_site.ts
+      query_twitter.ts
+5      result_site.ts
+      result_twitter.ts
+
+
+
 
 ＜apiの仕様＞
 

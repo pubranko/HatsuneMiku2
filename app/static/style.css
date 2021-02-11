@@ -9,3 +9,8 @@ body {
     background: white url("images/能義たか好_59551554_p0.gif") no-repeat;
 }
 */
+
+.search_group{
+    border: 0.1rem solid red;
+    /*border-color: red;*/
+}

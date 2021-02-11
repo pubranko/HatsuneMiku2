@@ -22,7 +22,7 @@
         </form>
     </fieldset>
 
-    <div class="search_conditions_top">
+    <div id="search_conditions_top">
         <!--fieldset class="cls_group cls_group_and" name="group_1">
             <legend>グループ1 (and結合)</legend>
             <div class="cls_s cls_s0">
@@ -32,15 +32,15 @@
         </fieldset-->
     </div>
     <form>
-        <input type="button" value="検索(別タブで開く)" onclick="f_search_results_window(document)">
-        <input type="button" value="検索" onclick="f_search_results_frame(document,1)">
+        <!--input type="button" value="検索(別タブで開く)" onclick="f_search_results_window(document)"-->
+        <input type="button" value="検索" onclick="search_main('site')">
         <br>
         <a>表示する件数</a><input type="text" value="10" class="page_max_lines">
     </form>
 </div>
 
 <h4>保管庫</h4>
-<p name="hokanko"></p>
+<div class="hokanko"></div>
 
 {#共通のフッター#}
 {% include "footer.html" %}

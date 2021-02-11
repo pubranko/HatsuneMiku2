@@ -1,5 +1,3 @@
-///<reference path="../main.ts"/>
-
 import * as global from '../global/_global';    //グローバル変数
 
 /**
@@ -25,7 +23,7 @@ export const input_form_add = (position: number): void => {
         return select_tag;
     }
 
-    global.add('search_conditions_count', 1); //検索条件カウントアップ
+    global.add('global_num', 'search_conditions_count', 1); //検索条件カウントアップ
 
     //divタグを作成し、条件フィールドと条件追加ボタンを中に設定する。
     let div_tag = document.createElement('div');
@@ -78,8 +76,8 @@ export const input_form_add = (position: number): void => {
 
     let elem;
     if(position == 0){
-        elem = document.getElementsByClassName("search_conditions_top");
-        elem[0].parentNode.insertBefore(div_tag, elem[0].nextSibling);
+        elem = document.getElementById("search_group_1");
+        elem.appendChild(div_tag);
     }else{
         console.log(position);
         elem = document.getElementById ("search_conditions_" + position);

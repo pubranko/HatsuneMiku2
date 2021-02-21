@@ -1,3 +1,4 @@
 {
-    "/app/static/main.js": "/app/static/main.js"
+    "/app/static/main.js": "/app/static/main.js",
+    "/app/static/app.css": "/app/static/app.css"
 }

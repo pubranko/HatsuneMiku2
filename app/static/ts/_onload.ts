@@ -11,6 +11,6 @@ window.onload = function(){
     console.log('hello');
     /*if (document.getElementsByClassName('cls_s').length == 1){
         // ページ読み込み時に実行したい処理
-        f_input_form_add(document,0);
+        f_search_conditions_add(document,0);
     }*/
 }

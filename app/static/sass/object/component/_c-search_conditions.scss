@@ -1,0 +1,26 @@
+/*検索条件*/
+%c-search_conditions {
+    //表示位置
+    display       : block;
+    //display: flex-start;
+}
+
+.c-search_conditions--type1 {
+    @extend %c-search_conditions;
+    background-color: map-get($colors,search_conditions_background--type1); //文字色
+    /*&:hover,
+    &:active {
+        background-color: map-get($colors,search_conditions_background--type2); //文字色
+        cursor        : pointer;     //カーソル : ボタン上のマウスの形を変える
+    }*/
+}
+
+.c-search_conditions--type2 {
+    @extend %c-search_conditions;
+    background-color: map-get($colors,search_conditions_background--type2); //文字色
+    /*&:hover,
+    &:active {
+        background-color: map-get($colors,search_conditions_background--type2); //文字色
+        cursor        : pointer;     //カーソル : ボタン上のマウスの形を変える
+    }*/
+}

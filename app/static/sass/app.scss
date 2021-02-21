@@ -1,0 +1,49 @@
+@charset "UTF-8";
+// ===============================================================
+// Foundation
+// ===============================================================
+// Reset
+@import "foundation/_f-reset";
+
+// Base
+@import "foundation/_f-base";
+
+// function,map,mixinの定義
+@import "foundation/_f-palette.scss";       //function : パレット→利用可能な各色を定義
+@import "foundation/_f-colors.scss";        //map : 当プロジェクトで使用する色を上記のパレットより割当
+@import "foundation/_f-font-size.scss";     //map : 当プロジェクトで使用するフォントサイズを定義
+@import "foundation/_f-frame.scss";         //mixin : 当プロジェクトで使用する区切り線を定義
+@import "foundation/_f-input-form.scss";    //mixin : 当プロジェクトで使用するインプットフォームを定義
+// ===============================================================
+// Layout
+// ===============================================================
+
+// ===============================================================
+// Object
+// ===============================================================
+// --------------------------------------------
+// Component
+// --------------------------------------------
+@import "object/component/_c-search_conditions.scss";
+@import "object/component/_c-search_group.scss";
+@import "object/component/_c-grouping_select.scss";
+
+// --------------------------------------------
+// Project
+// --------------------------------------------
+@import "object/project/_p-search_conditions.scss";
+// --------------------------------------------
+// Utility
+// --------------------------------------------
+@import "object/utility/_u-margin.scss";     //
+
+// @import "object/utility/typography";
+// @import "object/utility/dimension";
+// @import "object/utility/spaces";
+// @import "object/utility/display";
+// @import "object/utility/position";
+// @import "object/utility/state";
+// @import "object/utility/media_float";
+// @import "object/utility/clearfix";
+// @import "object/utility/img_replacement";
+// @import "object/utility/misc";

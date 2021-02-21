@@ -33,8 +33,10 @@ async def news_clip(search_query: SearchQuery):
             if type(item) is str:
                 result.append(item)
             elif type(item) is dict:
-                print(item['field'] +':'+ item['value1'])
-                result.append(item['field'] +':'+ item['value1'])
+                print(item)
+                field_set = item['field_set']
+                print(field_set['field'] +':'+ field_set['value1'])
+                result.append(field_set['field'] +':'+ field_set['value1'])
                 #item['range_flg']
             else:
                 print(vars(item))

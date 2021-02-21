@@ -1,5 +1,3 @@
-import * as global from '../global/_global';    //グローバル変数
-
 /**
  * @param
  * @param

@@ -19,25 +19,22 @@
   main.ts
     etc(初画面表示)
 ok      init_screen.ts
-    input(入力フォームの追加・変更・削除・移動、入力フォームの値を取得・チェック・json生成)
+    input(入力フォームの追加・変更・削除・移動)
 ok      input_form_add.ts
-      input_form_change.ts
-      input_form_delete.ts
-      input_form_move.ts
-1      input_get.ts
-2      input_check.ts
-3      input_json_create.ts
+ok      input_form_change.ts
+ok        input_form_delete.ts
+        input_form_move.ts
     group(グループ化・解除)
-      grouping.ts
-      group_release.ts
-    search(ajaxでクエリーを送信・戻り値を画面へ反映)
-4      query_site.ts
-      query_twitter.ts
-5      result_site.ts
-      result_twitter.ts
-
-
-
+        grouping.ts
+        group_release.ts
+    search(検索クエリー生成、戻り値の生成)
+0       search_main.ts  検索を実行時に呼び出すメイン関数
+1       get.ts
+2       check.ts
+3       json_create.ts
+4       query.ts
+5       result.ts
+            result_site.ts
 
 ＜apiの仕様＞
 

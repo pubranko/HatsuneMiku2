@@ -1,0 +1,7 @@
+.c-search_group{
+    //表示位置
+    //display: flex;
+    //形
+    border: 0.1rem solid map-get($colors,search_group_border--type1);
+    max-width: 60rem;
+}

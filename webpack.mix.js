@@ -12,8 +12,8 @@ mix.setResourceRoot('');
  |
  */
 
-mix.ts('app/static/ts/main.ts', 'app/static');
-    //.sass('src/app.scss', 'dist/');
+mix.ts('app/static/ts/main.ts', 'app/static')
+    .sass('app/static/sass/app.scss', 'app/static');
 
 
 // mix.js('resources/js/app.js', 'public/js')

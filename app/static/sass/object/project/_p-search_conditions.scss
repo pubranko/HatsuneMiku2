@@ -1,0 +1,40 @@
+/*検索条件*/
+.p-search_conditions {
+    //表示位置
+    display       : block;
+    //display: flex-start;
+}
+
+%p-search_conditions__grouping_select {
+    //表示位置
+    display       : inline-block;
+}
+.p-search_conditions__grouping_select--type1 {
+    @extend %p-search_conditions__grouping_select;
+    background-color: map-get($colors,search_conditions_background--type1); //文字色
+}
+.p-search_conditions__grouping_select--type2 {
+    @extend %p-search_conditions__grouping_select;
+    background-color: map-get($colors,search_conditions_background--type2); //文字色
+}
+
+.p-search_conditions__field_select {
+    //表示位置
+    display       : inline-block;
+}
+.p-search_conditions__search_text {
+    //表示位置
+    display       : inline-block;
+}
+.p-search_conditions__search_date {
+    //表示位置
+    display       : inline-block;
+}
+.p-search_conditions__delete {
+    //表示位置
+    display       : inline-block;
+}
+.p-search_conditions__add {
+    //表示位置
+    display       : inline-block;
+}

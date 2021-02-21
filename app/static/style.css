@@ -12,5 +12,6 @@ body {
 
 .search_group{
     border: 0.1rem solid red;
+    max-width: 60rem;
     /*border-color: red;*/
 }

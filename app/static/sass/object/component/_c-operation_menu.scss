@@ -1,0 +1,54 @@
+$color : #242b33;
+
+.c-operation_menu {
+    //位置
+    position: absolute;
+
+    //形
+    width        : auto;
+    height       : 1.2rem;
+    background   : #dddddd; //$color;
+    border-radius: 0.5rem;
+    box-shadow   : 0.1rem 0.1rem 0.2rem 0 rgba(0, 0, 0, 0.25); //あとで@mixinで定義しよう。
+    cursor       : pointer;
+    overflow     : hidden; //枠外をhidden属性にする。（選択できない、存在しないものとして扱う状態）
+    transition   : all .6s cubic-bezier(0.19, 1, 0.22, 1);
+
+    &:hover {
+        width   : auto;
+        height  : auto;
+        overflow: auto;
+
+        & .c-operation_menu__li {
+            opacity  : 1;
+            transform: translateY(0); //リストの文字の止まる位置
+
+            &:hover {
+                background: lighten($color, 10%); //選択されているリストの背景色。　あとで調整
+            }
+        }
+    }
+}
+
+.c-operation_menu__title{
+    padding-left: 0.5rem;
+}
+
+.c-operation_menu__ul {
+    list-style  : none;
+    padding-left: 1rem;
+}
+
+.c-operation_menu__li {
+    width     : 8rem;
+    text-align: left;
+    opacity   : 0; //完全に透過状態
+    transform : translateY(-1rem); //上からリストの文字が移動してくるように動作
+    transition: transform .6s cubic-bezier(0.19, 1, 0.22, 1),
+        opacity .6s cubic-bezier(0.19, 1, 0.22, 1);
+    color          : red;
+    font-weight    : 400;
+    text-decoration: none;
+}
+
+//.c-operation_menu__a {}

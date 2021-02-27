@@ -2,9 +2,9 @@ import { global_num, global_num_add, global_search_conditions_table, } from '../
 
 /**
  * 検索条件フィールドを追加する。
- * @param position 追加位置の指定。
+ * @param group_id 検索条件を追加するグループID。
  */
-export const search_conditions_add = (position: number): void => {
+export const search_conditions_add = (group_id: string): void => {
     /**selectタグ内のoptionタグを設定して返す。
      * @param select_tag:渡されたselectタグに対してoptionタグを埋め込む
      * @param lists:optionごとの配列。配列の中は連想配列で各要素を渡す。
@@ -85,13 +85,13 @@ export const search_conditions_add = (position: number): void => {
     search_conditions_tag.appendChild(input_tag_button_add);
 
     //押下された条件追加ボタンを取得し、その次に新なフィールド(divタグ)を追加。
-    let elem;
-    if (position == 0) {
-        elem = document.getElementById("search_group_1");
-        elem.appendChild(search_conditions_tag);
-    } else {
-        console.log(position);
-        elem = document.getElementById("search_conditions_" + position);
-        elem.parentNode.insertBefore(search_conditions_tag, elem.nextSibling);
-    }
+    let elem = document.getElementById(group_id);
+    elem.appendChild(search_conditions_tag);
+    // if (group_id == 0) {
+    //     elem = document.getElementById("search_group_1");
+    //     elem.appendChild(search_conditions_tag);
+    // } else {
+    //     elem = document.getElementById("search_conditions_" + global_num['search_conditions_count']);
+    //     elem.parentNode.insertBefore(search_conditions_tag, elem.nextSibling);
+    // }
 }

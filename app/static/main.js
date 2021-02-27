@@ -115,8 +115,8 @@ var group_add_1 = __webpack_require__(/*! ../group/group_add */ "./app/static/ts
 
 var init_screen = function init_screen() {
   window.addEventListener("load", function (e) {
-    group_add_1.group_add(0);
-    search_conditions_add_1.search_conditions_add(0);
+    group_add_1.group_add('first');
+    search_conditions_add_1.search_conditions_add('search_group_1');
   });
 };
 
@@ -233,13 +233,13 @@ var _global_1 = __webpack_require__(/*! ../global/_global */ "./app/static/ts/gl
 
 /**
  * 検索条件フィールドを追加する。
- * @param position 追加位置の指定。
+ * @param insertion_position 追加位置の指定。初期表示時はfirst。それ以外は検索条件id(search_conditions_id)を指定する。
  */
 
 
-var group_add = function group_add(position) {
+var group_add = function group_add(insertion_position) {
+  //export const group_add = (position: number): void => {
   _global_1.global_num_add('global_num', 'search_group_count', 1); //検索グループカウントアップ
-  //
 
 
   var fieldset_tag = document.createElement('fieldset');
@@ -248,16 +248,17 @@ var group_add = function group_add(position) {
   var legend_tag = document.createElement('legend');
   legend_tag.innerHTML = 'グループ' + _global_1.global_num['search_group_count'] + '(And結合)';
   fieldset_tag.appendChild(legend_tag); //ここに追加。　グループを追加、グループを削除、検索条件を追加、
-  //
 
+  var menu_botton = document.createElement('a');
+  menu_botton.className = 'c-button--type3';
+  menu_botton.setAttribute('onclick', 'search_conditions_add(' + _global_1.global_num['search_conditions_count'] + ')');
   var elem;
 
-  if (position == 0) {
+  if (insertion_position == 'first') {
     elem = document.getElementById("search_conditions_top");
     elem.appendChild(fieldset_tag);
   } else {
-    console.log(position);
-    elem = document.getElementById("search_conditions_" + position);
+    elem = document.getElementById(insertion_position);
     elem.parentNode.insertBefore(fieldset_tag, elem.nextSibling);
   }
 };
@@ -321,11 +322,11 @@ var _global_1 = __webpack_require__(/*! ../global/_global */ "./app/static/ts/gl
 
 /**
  * 検索条件フィールドを追加する。
- * @param position 追加位置の指定。
+ * @param group_id 検索条件を追加するグループID。
  */
 
 
-var search_conditions_add = function search_conditions_add(position) {
+var search_conditions_add = function search_conditions_add(group_id) {
   /**selectタグ内のoptionタグを設定して返す。
    * @param select_tag:渡されたselectタグに対してoptionタグを埋め込む
    * @param lists:optionごとの配列。配列の中は連想配列で各要素を渡す。
@@ -407,16 +408,14 @@ var search_conditions_add = function search_conditions_add(position) {
   input_tag_button_add.setAttribute('onclick', 'search_conditions_add(' + _global_1.global_num['search_conditions_count'] + ')');
   search_conditions_tag.appendChild(input_tag_button_add); //押下された条件追加ボタンを取得し、その次に新なフィールド(divタグ)を追加。
 
-  var elem;
-
-  if (position == 0) {
-    elem = document.getElementById("search_group_1");
-    elem.appendChild(search_conditions_tag);
-  } else {
-    console.log(position);
-    elem = document.getElementById("search_conditions_" + position);
-    elem.parentNode.insertBefore(search_conditions_tag, elem.nextSibling);
-  }
+  var elem = document.getElementById(group_id);
+  elem.appendChild(search_conditions_tag); // if (group_id == 0) {
+  //     elem = document.getElementById("search_group_1");
+  //     elem.appendChild(search_conditions_tag);
+  // } else {
+  //     elem = document.getElementById("search_conditions_" + global_num['search_conditions_count']);
+  //     elem.parentNode.insertBefore(search_conditions_tag, elem.nextSibling);
+  // }
 };
 
 exports.search_conditions_add = search_conditions_add;
@@ -583,8 +582,8 @@ window.search_main = function (search_destination) {
   search_main_1.search_main(search_destination);
 };
 
-window.search_conditions_add = function (position) {
-  search_conditions_add_1.search_conditions_add(position);
+window.search_conditions_add = function (group_id) {
+  search_conditions_add_1.search_conditions_add(group_id);
 }; //初回検索条件フィールド追加
 
 

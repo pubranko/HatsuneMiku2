@@ -15,7 +15,7 @@ export interface Window {
     test1(): void;
     test2(): void;
     test3(): void;
-    search_conditions_add(position:number): void;
+    search_conditions_add(group_id:string): void;
     search_field_change(search_conditions_id:string,option_type:string): void;
     search_conditions_delete(search_conditions_id:string): void;
     grouping_select(grouing_select_id:string,swich:string):void
@@ -26,7 +26,7 @@ window.test1 = () => { test.test1(); };
 window.test2 = () => { test.test2(); };
 window.test3 = () => { test.test3(); };
 window.search_main = (search_destination) => {search_main(search_destination )}
-window.search_conditions_add = (position) => { search_conditions_add(position); };    //初回検索条件フィールド追加
+window.search_conditions_add = (group_id) => { search_conditions_add(group_id); };    //初回検索条件フィールド追加
 window.search_field_change = (search_conditions_id,option_type) => { search_field_change(search_conditions_id,option_type); };
 window.search_conditions_delete = (search_conditions_id) => { search_conditions_delete(search_conditions_id); };
 window.grouping_select = (grouing_select_id,swich) => {grouping_select(grouing_select_id,swich); };

@@ -76,14 +76,6 @@ export const search_conditions_add = (group_id: string): void => {
     input_tag_button_del.setAttribute('onclick', 'search_conditions_delete("search_conditions_' + global_num['search_conditions_count'] + '")');
     search_conditions_tag.appendChild(input_tag_button_del);
 
-    //条件追加ボタンを作成し、：検索条件ボックスへ追加
-    let input_tag_button_add = document.createElement('input');
-    input_tag_button_add.className = 'p-search_conditions__add';
-    input_tag_button_add.type = 'button';
-    input_tag_button_add.value = '条件追加↓';
-    input_tag_button_add.setAttribute('onclick', 'search_conditions_add(' + global_num['search_conditions_count'] + ')');
-    search_conditions_tag.appendChild(input_tag_button_add);
-
     //押下された条件追加ボタンを取得し、その次に新なフィールド(divタグ)を追加。
     let elem = document.getElementById(group_id);
     elem.appendChild(search_conditions_tag);

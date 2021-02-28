@@ -14,30 +14,27 @@
         8. 上右のような場合は、独立したクラスをそれぞれ使用することとする。（u-mtrのように定義しない）
     クラスのネーミング(大きさ)
         1. marginの実際の大きさは1remに対する%で記載
-        2. u-margin--tb-50(上下に0.5rem)
-        3. u-margin--lr-120(左右1.2rem)
+        2. u-margin--tb50(上下に0.5rem)
+        3. u-margin--lr120(左右1.2rem)
+        4. u-margin--t-150(上にマイナス1.5rem)
 */
 
 //上
 $i:0;
 
 @while $i <=3 {
-    .u-margin--t-#{$i*100} {
+    .u-margin--t#{$i*100} {
         margin-top:#{$i}rem;
     }
 
     $i : $i+0.1;
 }
 
-.u-margin--t-350 {
-    margin-top: 3.5rem;
-}
-
 //下
 $i:0;
 
 @while $i <=3 {
-    .u-margin--b-#{$i*100} {
+    .u-margin--b#{$i*100} {
         margin-bottom:#{$i}rem;
     }
 
@@ -48,22 +45,18 @@ $i:0;
 $i:0;
 
 @while $i <=3 {
-    .u-margin--l-#{$i*100} {
+    .u-margin--l#{$i*100} {
         margin-left:#{$i}rem;
     }
 
     $i : $i+0.1;
 }
 
-.u-margin--l-1000 {
-    margin-left: 10rem
-}
-
 //右
 $i:0;
 
 @while $i <=3 {
-    .u-margin--r-#{$i*100} {
+    .u-margin--r#{$i*100} {
         margin-right:#{$i}rem;
     }
 
@@ -74,7 +67,7 @@ $i:0;
 $i:0;
 
 @while $i <=3 {
-    .u-margin--tb-#{$i*100} {
+    .u-margin--tb#{$i*100} {
         margin-top   :#{$i}rem;
         margin-bottom:#{$i}rem;
     }
@@ -86,7 +79,7 @@ $i:0;
 $i:0;
 
 @while $i <=3 {
-    .u-margin--lr-#{$i*100} {
+    .u-margin--lr#{$i*100} {
         margin-left :#{$i}rem;
         margin-right:#{$i}rem;
     }
@@ -103,4 +96,13 @@ $i:0;
     }
 
     $i : $i+0.1;
+}
+
+//カスタム
+.u-margin--t-150 {
+    margin-top: -1.5rem;
+}
+
+.u-margin--r1200 {
+    margin-right: 12rem;
 }

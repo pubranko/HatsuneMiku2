@@ -245,7 +245,7 @@ var group_add = function group_add(insertion_position) {
   var list_add = function list_add(ul_tag, lists) {
     lists.forEach(function (dict) {
       var list_tag = document.createElement('li');
-      list_tag.className = dict['class_name'];
+      list_tag.classList.add(dict['class_name']);
       list_tag.setAttribute('onclick', dict['onclick']);
       list_tag.innerHTML = dict['menu'];
       ul_tag.appendChild(list_tag);
@@ -259,41 +259,45 @@ var group_add = function group_add(insertion_position) {
   var search_group_id = 'search_group_' + _global_1.global_num['search_group_count']; //今回作成されるグループの検索グループID
 
   var fieldset_tag = document.createElement('fieldset');
-  fieldset_tag.className = 'c-search_group';
+  fieldset_tag.classList.add('c-search_group');
   fieldset_tag.id = search_group_id;
   var legend_tag = document.createElement('legend');
   legend_tag.innerHTML = search_group_id + '(And結合)';
   fieldset_tag.appendChild(legend_tag); //グループメニュー
 
   var div_tag = document.createElement('div');
-  div_tag.className = 'c-operation_menu__postion u-margin--t-150'; //div_tag.id = search_group_id;
+  div_tag.classList.add('p-operation_menu__postion', 'u-margin--t-150'); //div_tag.id = search_group_id;
 
   var nav_tag = document.createElement('nav');
-  nav_tag.className = 'c-operation_menu__nav u-margin--l80';
+  nav_tag.classList.add('p-operation_menu__nav', 'u-margin--l80');
   nav_tag.innerText = '…';
   nav_tag.setAttribute('onclick', 'group_nav_swich("' + search_group_id + '","on")');
   div_tag.appendChild(nav_tag); //最後にulタグをnavタグへ追加
 
+  fieldset_tag.appendChild(div_tag); //グループメニューリスト
+
+  var div_tag2 = document.createElement('div');
+  div_tag2.classList.add('p-operation_menu_list__postion', 'u-margin--t50');
   var ul_tag = document.createElement('ul');
-  ul_tag.className = 'c-operation_menu__ul u-display--none u-margin--tb30';
+  ul_tag.id = search_group_id + '_menu_list';
+  ul_tag.classList.add('p-operation_menu__ul', 'u-display--none', 'u-margin--t0');
   var lists = [{
-    'class_name': 'c-operation_menu__li',
+    'class_name': 'p-operation_menu__li',
     'onclick': 'search_conditions_add("' + search_group_id + '")',
     'menu': '検索条件追加'
   }, {
-    'class_name': 'c-operation_menu__li',
+    'class_name': 'p-operation_menu__li',
     'onclick': 'grouping_conditons_change("' + search_group_id + '")',
     'menu': 'AND/OR切り替え'
-  }, //{ 'class_name': 'c-operation_menu__li', 'onclick': 'grouping_start("'+search_group_id+'")','menu': '検索条件をグループ化' },
+  }, //{ 'class_name': 'p-operation_menu__li', 'onclick': 'grouping_start("'+search_group_id+'")','menu': '検索条件をグループ化' },
   {
-    'class_name': 'c-operation_menu__li',
+    'class_name': 'p-operation_menu__li',
     'onclick': 'group_release("' + search_group_id + '")',
     'menu': 'グループ解除'
   }];
-  div_tag.appendChild(list_add(ul_tag, lists)); //最後にulタグをnavタグへ追加
-  //div_tag.appendChild(nav_tag);
+  div_tag2.appendChild(list_add(ul_tag, lists)); //最後にulタグをnavタグへ追加
 
-  fieldset_tag.appendChild(div_tag);
+  fieldset_tag.appendChild(div_tag2);
   var elem;
 
   if (insertion_position == 'first') {
@@ -328,17 +332,18 @@ exports.group_nav_swich = void 0;
  */
 
 var group_nav_swich = function group_nav_swich(search_group_id, swich) {
-  var group = document.querySelector("#" + search_group_id);
-  var group_nav = group.querySelector(".c-operation_menu__ul");
-  var class_list = group_nav.classList;
+  var group = document.querySelector('#' + search_group_id);
+  var group_nav = group.querySelector('.p-operation_menu__nav');
+  var group_ul = document.querySelector('#' + search_group_id + '_menu_list');
+  var class_list = group_ul.classList;
   console.log(class_list);
 
   if (swich == 'on') {
-    class_list.remove('u-display--none');
     group_nav.setAttribute('onclick', 'group_nav_swich("' + search_group_id + '","off")');
+    class_list.remove('u-display--none');
   } else {
-    class_list.add('u-display--none');
     group_nav.setAttribute('onclick', 'group_nav_swich("' + search_group_id + '","on")');
+    class_list.add('u-display--none');
   }
 };
 
@@ -394,20 +399,20 @@ var search_conditions_add = function search_conditions_add(group_id) {
 
   var search_conditions_tag = document.createElement('div');
   search_conditions_tag.id = 'search_conditions_' + _global_1.global_num['search_conditions_count'];
-  search_conditions_tag.className = 'p-search_conditions'; // search_conditions_tag.setAttribute(
+  search_conditions_tag.classList.add('p-search_conditions'); // search_conditions_tag.setAttribute(
   //     'onclick',
   //     'search_conditions_select("search_conditions_' + global_num['search_conditions_count'] + '","on")');
   //グループ化ボタン用divタグ
 
   var grouping_select_tag = document.createElement('div');
   grouping_select_tag.id = 'grouping_select_' + _global_1.global_num['search_conditions_count'];
-  grouping_select_tag.className = 'p-search_conditions__grouping_select--type1';
+  grouping_select_tag.classList.add('p-search_conditions__grouping_select--type1');
   grouping_select_tag.setAttribute('onclick', 'grouping_select("grouping_select_' + _global_1.global_num['search_conditions_count'] + '","on")');
   grouping_select_tag.textContent = 'Grp化選択';
   search_conditions_tag.appendChild(grouping_select_tag); //selectタグを作成。またその中にoptionタグを追加していく。
 
   var select_tag = document.createElement('select');
-  select_tag.className = 'p-search_conditions__field_select';
+  select_tag.classList.add('p-search_conditions__field_select');
   select_tag.name = 'Filed';
   var lists = [{
     'op_num': 0,
@@ -430,14 +435,14 @@ var search_conditions_add = function search_conditions_add(group_id) {
   //検索条件入力フィールド：検索条件ボックスへ追加
 
   var input_tag_text = document.createElement('input');
-  input_tag_text.className = 'p-search_conditions__search_text';
+  input_tag_text.classList.add('p-search_conditions__search_text');
   input_tag_text.type = 'text';
   input_tag_text.value = '';
   search_conditions_tag.appendChild(input_tag_text); //条件削除ボタンを作成し、：検索条件ボックスへ追加
 
   var input_tag_button_del = document.createElement('input');
   input_tag_button_del.type = 'button';
-  input_tag_button_del.className = 'p-search_conditions__delete';
+  input_tag_button_del.classList.add('p-search_conditions__delete');
   input_tag_button_del.value = '条件削除';
   input_tag_button_del.setAttribute('onclick', 'search_conditions_delete("search_conditions_' + _global_1.global_num['search_conditions_count'] + '")');
   search_conditions_tag.appendChild(input_tag_button_del); //押下された条件追加ボタンを取得し、その次に新なフィールド(divタグ)を追加。

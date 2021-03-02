@@ -1,0 +1,61 @@
+// .p-operation_menu{
+// }
+
+.p-operation_menu__postion {
+    float   : right;
+    position: relative;
+    right   : 2rem;
+}
+
+.p-operation_menu__nav {
+    //位置
+    position: absolute;
+
+    //形
+    //width        : auto;
+    width          : 1.5rem;
+    height         : 1.5rem;
+    border-radius  : 50%; //円
+    background     : map-get($colors, group_menu_background--type1);
+    //border-radius: 0.5rem;
+    box-shadow     : 0.1rem 0.1rem 0.2rem 0 rgba(0, 0, 0, 0.25); //あとで@mixinで定義しよう。
+    cursor         : pointer;
+    //overflow     : hidden; //枠外をhidden属性にする。（選択できない、存在しないものとして扱う状態）
+    overflow       : visible;
+    transition     : all .6s cubic-bezier(0.19, 1, 0.22, 1);
+    //テキスト
+    padding-top    : 0.1rem;
+    padding-left   : 0.3rem;
+
+}
+
+.p-operation_menu_list__postion {
+    float   : right;
+    position: relative;
+    right   : 10rem;
+}
+
+.p-operation_menu__ul {
+    position: absolute;
+    list-style  : none;
+    padding-left: 1rem;
+}
+
+.p-operation_menu__li {
+    padding-right: 0.5rem;
+    width        : 9rem;
+    text-align   : left;
+    background     : map-get($colors, group_menu_background--type1);
+    //opacity      : 0; //完全に透過状態
+    // transform    : translateX(-10rem), translateY(-1rem); //上からリストの文字が移動してくるように動作
+    // transition   : transform .6s cubic-bezier(0.19, 1, 0.22, 1),
+    //     opacity .6s cubic-bezier(0.19, 1, 0.22, 1);
+    color          : map-get($colors, group_menu_text--type1);
+    font-weight    : 400;
+    text-decoration: none;
+    user-select:none;       //テキストを選択対象外にする
+
+    &:hover{
+        background     : map-get($colors, group_menu_background--type2);
+    }
+}

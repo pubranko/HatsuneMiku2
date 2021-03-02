@@ -478,42 +478,6 @@ body {
 }
 
 /*-----*/
-.c-operation_menu__postion {
-  float: right;
-  position: relative;
-  right: 2rem;
-}
-
-.c-operation_menu__nav {
-  position: absolute;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-  background: #b3e5fc;
-  box-shadow: 0.1rem 0.1rem 0.2rem 0 rgba(0, 0, 0, 0.25);
-  cursor: pointer;
-  transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-  padding-top: 0.1rem;
-  padding-left: 0.3rem;
-}
-
-.c-operation_menu__ul {
-  list-style: none;
-  padding-left: 1rem;
-}
-
-.c-operation_menu__li {
-  padding-right: 0.5rem;
-  width: auto;
-  text-align: left;
-  opacity: 0;
-  transform: translateX(-10rem), translateY(-1rem);
-  transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-  color: #616161;
-  font-weight: 400;
-  text-decoration: none;
-}
-
 /*検索条件*/
 .p-search_conditions {
   display: block;
@@ -549,6 +513,55 @@ body {
 
 .p-search_conditions__add {
   display: inline-block;
+}
+
+.p-operation_menu__postion {
+  float: right;
+  position: relative;
+  right: 2rem;
+}
+
+.p-operation_menu__nav {
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: #b3e5fc;
+  box-shadow: 0.1rem 0.1rem 0.2rem 0 rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  overflow: visible;
+  transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  padding-top: 0.1rem;
+  padding-left: 0.3rem;
+}
+
+.p-operation_menu_list__postion {
+  float: right;
+  position: relative;
+  right: 10rem;
+}
+
+.p-operation_menu__ul {
+  position: absolute;
+  list-style: none;
+  padding-left: 1rem;
+}
+
+.p-operation_menu__li {
+  padding-right: 0.5rem;
+  width: 9rem;
+  text-align: left;
+  background: #b3e5fc;
+  color: #616161;
+  font-weight: 400;
+  text-decoration: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.p-operation_menu__li:hover {
+  background: #039be5;
 }
 
 /*  各要素のマージンの定義を行う。

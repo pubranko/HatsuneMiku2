@@ -33,7 +33,7 @@ export const search_conditions_add = (group_id: string): void => {
     //検索条件ボックス
     let search_conditions_tag = document.createElement('div');
     search_conditions_tag.id = 'search_conditions_' + global_num['search_conditions_count'];
-    search_conditions_tag.className = 'p-search_conditions';
+    search_conditions_tag.classList.add('p-search_conditions');
     // search_conditions_tag.setAttribute(
     //     'onclick',
     //     'search_conditions_select("search_conditions_' + global_num['search_conditions_count'] + '","on")');
@@ -41,16 +41,14 @@ export const search_conditions_add = (group_id: string): void => {
     //グループ化ボタン用divタグ
     let grouping_select_tag = document.createElement('div');
     grouping_select_tag.id = 'grouping_select_' + global_num['search_conditions_count'];
-    grouping_select_tag.className = 'p-search_conditions__grouping_select--type1';
-    grouping_select_tag.setAttribute(
-        'onclick',
-        'grouping_select("grouping_select_' + global_num['search_conditions_count'] + '","on")');
+    grouping_select_tag.classList.add('p-search_conditions__grouping_select--type1');
+    grouping_select_tag.setAttribute('onclick','grouping_select("grouping_select_' + global_num['search_conditions_count'] + '","on")');
     grouping_select_tag.textContent = 'Grp化選択';
     search_conditions_tag.appendChild(grouping_select_tag);
 
     //selectタグを作成。またその中にoptionタグを追加していく。
     let select_tag = document.createElement('select');
-    select_tag.className = 'p-search_conditions__field_select';
+    select_tag.classList.add('p-search_conditions__field_select');
     select_tag.name = 'Filed';
     let lists = [       //optionタグの内容を配列・連想配列で生成
         { 'op_num': 0, 'op_case': '件名or本文', 'selected': true },
@@ -63,7 +61,7 @@ export const search_conditions_add = (group_id: string): void => {
 
     //検索条件入力フィールド：検索条件ボックスへ追加
     let input_tag_text = document.createElement('input');
-    input_tag_text.className = 'p-search_conditions__search_text';
+    input_tag_text.classList.add('p-search_conditions__search_text');
     input_tag_text.type = 'text';
     input_tag_text.value = '';
     search_conditions_tag.appendChild(input_tag_text);
@@ -71,7 +69,7 @@ export const search_conditions_add = (group_id: string): void => {
     //条件削除ボタンを作成し、：検索条件ボックスへ追加
     let input_tag_button_del = document.createElement('input');
     input_tag_button_del.type = 'button';
-    input_tag_button_del.className = 'p-search_conditions__delete';
+    input_tag_button_del.classList.add('p-search_conditions__delete');
     input_tag_button_del.value = '条件削除';
     input_tag_button_del.setAttribute('onclick', 'search_conditions_delete("search_conditions_' + global_num['search_conditions_count'] + '")');
     search_conditions_tag.appendChild(input_tag_button_del);

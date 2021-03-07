@@ -1,5 +1,5 @@
 /**グローバル変数として使用したい変数を連想配列で格納*/
-export let global_num: { [key: string]: number; } = {
+export let global_num: { [key: string]: number } = {
     'search_conditions_count': 0,
     'search_group_count': 0,
 }
@@ -52,3 +52,16 @@ export const global_search_conditions_table: { [key: number]: { [key: string]: a
         'field_name': '発行者'
     }
 }
+
+/**グローバル変数：実行中にイベント配列として保存する*/
+export let global_runing_events: Array<string> = [];
+
+/**グローバル変数：実行中イベント配列への追加を行う。
+ * @param key グローバル変数の項目を指定
+ * @param num グローバル変数へ加算する値を指定。マイナスを入れると減算される。
+ */
+export const global_runing_events_add = (event: string): void => {
+    global_runing_events.push(event);
+
+}
+

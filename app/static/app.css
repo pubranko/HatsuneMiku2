@@ -515,10 +515,14 @@ body {
   display: inline-block;
 }
 
-.p-operation_menu__postion {
+.p-operation_menu__position {
   float: right;
   position: relative;
   right: 2rem;
+}
+
+.p-operation_menu__position--type2 {
+  display: inline-block;
 }
 
 .p-operation_menu__nav {
@@ -535,16 +539,33 @@ body {
   padding-left: 0.3rem;
 }
 
-.p-operation_menu_list__postion {
+.p-operation_menu__nav--type2 {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: #b3e5fc;
+  box-shadow: 0.1rem 0.1rem 0.2rem 0 rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  overflow: visible;
+  transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  padding-top: 0.1rem;
+  padding-left: 0.3rem;
+}
+
+.p-operation_menu_list__position {
   float: right;
   position: relative;
   right: 10rem;
 }
 
+.p-operation_menu_list__position--type2 {
+  display: inline-block;
+}
+
 .p-operation_menu__ul {
   position: absolute;
   list-style: none;
-  padding-left: 1rem;
+  padding-left: 0.2rem;
 }
 
 .p-operation_menu__li {

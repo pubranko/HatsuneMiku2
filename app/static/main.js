@@ -124,6 +124,45 @@ exports.init_screen = init_screen;
 
 /***/ }),
 
+/***/ "./app/static/ts/etc/_menu_off.ts":
+/*!****************************************!*\
+  !*** ./app/static/ts/etc/_menu_off.ts ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.menu_off = void 0;
+
+var _global_1 = __webpack_require__(/*! ../global/_global */ "./app/static/ts/global/_global.ts"); //グローバル変数
+
+/**
+ * 選択されたメニューリスト以外を全て非表示にする。
+ * @param key なし
+ */
+
+
+var menu_off = function menu_off() {
+  //メニューリスト全件取得
+  var operation_menu = document.querySelectorAll('.p-operation_menu__ul');
+  operation_menu.forEach(function (menu) {
+    //表示中、かつ、処理中のメニューリスト以外は非表示にする。
+    if (!menu.classList.contains('u-display--none') && _global_1.global_runing_events.indexOf(menu.id) < 0) {
+      //if()
+      menu.classList.add('u-display--none');
+    }
+  });
+
+  _global_1.global_runing_events.splice(0);
+};
+
+exports.menu_off = menu_off;
+
+/***/ }),
+
 /***/ "./app/static/ts/global/_global.ts":
 /*!*****************************************!*\
   !*** ./app/static/ts/global/_global.ts ***!
@@ -135,7 +174,7 @@ exports.init_screen = init_screen;
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.global_search_conditions_table = exports.global_num_add = exports.global_num = void 0;
+exports.global_runing_events_add = exports.global_runing_events = exports.global_search_conditions_table = exports.global_num_add = exports.global_num = void 0;
 /**グローバル変数として使用したい変数を連想配列で格納*/
 
 exports.global_num = {
@@ -213,6 +252,52 @@ exports.global_search_conditions_table = {
     'field_name': '発行者'
   }
 };
+/**グローバル変数：実行中にイベント配列として保存する*/
+
+exports.global_runing_events = [];
+/**グローバル変数：実行中イベント配列への追加を行う。
+ * @param key グローバル変数の項目を指定
+ * @param num グローバル変数へ加算する値を指定。マイナスを入れると減算される。
+ */
+
+var global_runing_events_add = function global_runing_events_add(event) {
+  exports.global_runing_events.push(event);
+};
+
+exports.global_runing_events_add = global_runing_events_add;
+
+/***/ }),
+
+/***/ "./app/static/ts/group/_grouping_start.ts":
+/*!************************************************!*\
+  !*** ./app/static/ts/group/_grouping_start.ts ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.grouping_start = void 0;
+/**
+ *
+ * @param
+ */
+
+var grouping_start = function grouping_start(search_group_id, search_conditions_id) {
+  var search_conditions = document.querySelectorAll('.p-search_conditions');
+  console.log(search_group_id);
+  console.log(search_conditions_id);
+  search_conditions.forEach(function (search_condition) {
+    console.log(search_condition.id);
+    var menu = document.querySelector('#' + search_condition.id + '_menu');
+    var menu_nav = menu.querySelector('.p-operation_menu__nav--type2');
+    console.log(menu_nav.className);
+  });
+};
+
+exports.grouping_start = grouping_start;
 
 /***/ }),
 
@@ -256,7 +341,7 @@ var group_add = function group_add(insertion_position) {
   _global_1.global_num_add('global_num', 'search_group_count', 1); //検索グループカウントアップ
 
 
-  var search_group_id = 'search_group_' + _global_1.global_num['search_group_count']; //今回作成されるグループの検索グループID
+  var search_group_id = 'search_group_' + _global_1.global_num['search_group_count']; //今回作成される検索グループID
 
   var fieldset_tag = document.createElement('fieldset');
   fieldset_tag.classList.add('c-search_group');
@@ -266,31 +351,30 @@ var group_add = function group_add(insertion_position) {
   fieldset_tag.appendChild(legend_tag); //グループメニュー
 
   var div_tag = document.createElement('div');
-  div_tag.classList.add('p-operation_menu__postion', 'u-margin--t-150'); //div_tag.id = search_group_id;
-
+  div_tag.classList.add('p-operation_menu__position', 'u-margin--t-150');
+  div_tag.id = search_group_id + '_menu';
   var nav_tag = document.createElement('nav');
   nav_tag.classList.add('p-operation_menu__nav', 'u-margin--l80');
   nav_tag.innerText = '…';
-  nav_tag.setAttribute('onclick', 'group_nav_swich("' + search_group_id + '","on")');
-  div_tag.appendChild(nav_tag); //最後にulタグをnavタグへ追加
-
+  nav_tag.setAttribute('onclick', 'group_menu_swich("' + search_group_id + '")');
+  div_tag.appendChild(nav_tag);
   fieldset_tag.appendChild(div_tag); //グループメニューリスト
 
   var div_tag2 = document.createElement('div');
-  div_tag2.classList.add('p-operation_menu_list__postion', 'u-margin--t50');
+  div_tag2.classList.add('p-operation_menu_list__position', 'u-margin--t50');
+  div_tag2.id = search_group_id + '_menu_list';
   var ul_tag = document.createElement('ul');
-  ul_tag.id = search_group_id + '_menu_list';
   ul_tag.classList.add('p-operation_menu__ul', 'u-display--none', 'u-margin--t0');
+  ul_tag.id = search_group_id + '_ul';
   var lists = [{
     'class_name': 'p-operation_menu__li',
     'onclick': 'search_conditions_add("' + search_group_id + '")',
     'menu': '検索条件追加'
   }, {
     'class_name': 'p-operation_menu__li',
-    'onclick': 'grouping_conditons_change("' + search_group_id + '")',
+    'onclick': 'grouping_conditions_change("' + search_group_id + '")',
     'menu': 'AND/OR切り替え'
-  }, //{ 'class_name': 'p-operation_menu__li', 'onclick': 'grouping_start("'+search_group_id+'")','menu': '検索条件をグループ化' },
-  {
+  }, {
     'class_name': 'p-operation_menu__li',
     'onclick': 'group_release("' + search_group_id + '")',
     'menu': 'グループ解除'
@@ -310,13 +394,66 @@ var group_add = function group_add(insertion_position) {
 };
 
 exports.group_add = group_add;
+/* グループのイメージ
+<fieldset class="c-search_group" id = "search_group_1" >
+    <legend>search_group_1(And結合) < /legend>
+        <div class="p-operation_menu__position u-margin--t-150" id="search_group_1_menu">
+            <nav class="p-operation_menu__nav u-margin--l80" onclick="group_menu_swich("search_group_1","on")">…</nav >
+        </div>
+        <div class="p-operation_menu_list__position u-margin--t50" id="search_group_1_menu_list">
+            <ul class="p-operation_menu__ul u-margin--t0 u-display--none">
+                <li class="p-operation_menu__li" onclick="search_conditions_add("search_group_1")">検索条件追加</li >
+                <li class="p-operation_menu__li" onclick = "grouping_conditions_change("search_group_1")" > AND / OR切り替え < /li>
+                <li class="p-operation_menu__li" onclick="group_release("search_group_1")">グループ解除</li >
+            </ul>
+        </div >
+</fieldset>
+*/
 
 /***/ }),
 
-/***/ "./app/static/ts/group/group_nav_swich.ts":
-/*!************************************************!*\
-  !*** ./app/static/ts/group/group_nav_swich.ts ***!
-  \************************************************/
+/***/ "./app/static/ts/group/group_menu_swich.ts":
+/*!*************************************************!*\
+  !*** ./app/static/ts/group/group_menu_swich.ts ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.group_menu_swich = void 0;
+
+var _global_1 = __webpack_require__(/*! ../global/_global */ "./app/static/ts/global/_global.ts"); //グローバル変数
+
+/**
+ * グループメニューの表示/非表示の切り替えを行う。。
+ * @param 選択対象の検索条件id(search_group_id)
+ */
+
+
+var group_menu_swich = function group_menu_swich(search_group_id) {
+  var menu_list = document.querySelector('#' + search_group_id + '_menu_list');
+  var menu_list_ul = menu_list.querySelector('.p-operation_menu__ul'); //実行中のメニューは非表示にしないよう実行中イベントへ登録
+
+  _global_1.global_runing_events.push(menu_list_ul.id);
+
+  if (menu_list_ul.classList.contains('u-display--none')) {
+    menu_list_ul.classList.remove('u-display--none');
+  } else {
+    menu_list_ul.classList.add('u-display--none');
+  }
+};
+
+exports.group_menu_swich = group_menu_swich;
+
+/***/ }),
+
+/***/ "./app/static/ts/input/_search_conditions_menu.ts":
+/*!********************************************************!*\
+  !*** ./app/static/ts/input/_search_conditions_menu.ts ***!
+  \********************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -324,30 +461,61 @@ exports.group_add = group_add;
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports.group_nav_swich = void 0;
+exports.search_conditions_menu = void 0;
 /**
- * グループメニューのON/OFFの切り替えを行う。。
- * @param 選択対象の検索条件id(search_group_id)
- * @param on/offの切り替え(swich)
+ * 検索条件フィールドを追加する。
+ * @param
  */
 
-var group_nav_swich = function group_nav_swich(search_group_id, swich) {
-  var group = document.querySelector('#' + search_group_id);
-  var group_nav = group.querySelector('.p-operation_menu__nav');
-  var group_ul = document.querySelector('#' + search_group_id + '_menu_list');
-  var class_list = group_ul.classList;
-  console.log(class_list);
+var search_conditions_menu = function search_conditions_menu(search_group_id, search_conditions_id) {
+  /**ulタグ内にliタグを設定して返す。
+   * @param ul_tag:対象のulタグエレメント。
+   * @param lists:liごとの配列。配列の中は連想配列で各要素を渡す。
+   */
+  var list_add = function list_add(ul_tag, lists) {
+    lists.forEach(function (dict) {
+      var list_tag = document.createElement('li');
+      list_tag.classList.add(dict['class_name']);
+      list_tag.setAttribute('onclick', dict['onclick']);
+      list_tag.innerHTML = dict['menu'];
+      ul_tag.appendChild(list_tag);
+    });
+    return ul_tag;
+  }; //メニュー
 
-  if (swich == 'on') {
-    group_nav.setAttribute('onclick', 'group_nav_swich("' + search_group_id + '","off")');
-    class_list.remove('u-display--none');
-  } else {
-    group_nav.setAttribute('onclick', 'group_nav_swich("' + search_group_id + '","on")');
-    class_list.add('u-display--none');
-  }
+
+  var menu_tag = document.createElement('div');
+  menu_tag.classList.add('p-operation_menu__position--type2');
+  menu_tag.id = search_conditions_id + '_menu';
+  var nav_tag = document.createElement('nav');
+  nav_tag.classList.add('p-operation_menu__nav--type2');
+  nav_tag.innerText = '…';
+  nav_tag.setAttribute('onclick', 'search_conditions_menu_swich("' + search_conditions_id + '","on")');
+  menu_tag.appendChild(nav_tag); //メニューリスト
+
+  var menu_list_tag = document.createElement('div');
+  menu_list_tag.classList.add('p-operation_menu_list__position--type2', 'u-margin--t50');
+  menu_list_tag.id = search_conditions_id + '_menu_list';
+  var ul_tag = document.createElement('ul');
+  ul_tag.classList.add('p-operation_menu__ul', 'u-display--none', 'u-margin--t0');
+  var lists = [{
+    'class_name': 'p-operation_menu__li',
+    'onclick': 'grouping_start("' + search_group_id + '","' + search_conditions_id + '")',
+    'menu': '検索条件グループ化'
+  }, {
+    'class_name': 'p-operation_menu__li',
+    'onclick': 'search_conditions_delete("' + search_conditions_id + '")',
+    'menu': '検索条件削除'
+  }];
+  menu_list_tag.appendChild(list_add(ul_tag, lists)); //最後にulタグをnavタグへ追加
+
+  return {
+    'menu': menu_tag,
+    'menu_list': menu_list_tag
+  }; //あとで
 };
 
-exports.group_nav_swich = group_nav_swich;
+exports.search_conditions_menu = search_conditions_menu;
 
 /***/ }),
 
@@ -366,13 +534,15 @@ exports.search_conditions_add = void 0;
 
 var _global_1 = __webpack_require__(/*! ../global/_global */ "./app/static/ts/global/_global.ts"); //グローバル変数
 
+
+var _search_conditions_menu_1 = __webpack_require__(/*! ./_search_conditions_menu */ "./app/static/ts/input/_search_conditions_menu.ts");
 /**
  * 検索条件フィールドを追加する。
- * @param group_id 検索条件を追加するグループID。
+ * @param search_group_id 検索条件を追加するグループID。
  */
 
 
-var search_conditions_add = function search_conditions_add(group_id) {
+var search_conditions_add = function search_conditions_add(search_group_id) {
   /**selectタグ内のoptionタグを設定して返す。
    * @param select_tag:渡されたselectタグに対してoptionタグを埋め込む
    * @param lists:optionごとの配列。配列の中は連想配列で各要素を渡す。
@@ -394,22 +564,19 @@ var search_conditions_add = function search_conditions_add(group_id) {
   };
 
   _global_1.global_num_add('global_num', 'search_conditions_count', 1); //検索条件カウントアップ
+
+
+  var search_conditions_id = 'search_conditions_' + _global_1.global_num['search_conditions_count']; //今回作成される検索条件ID
   //検索条件ボックス
 
-
   var search_conditions_tag = document.createElement('div');
-  search_conditions_tag.id = 'search_conditions_' + _global_1.global_num['search_conditions_count'];
-  search_conditions_tag.classList.add('p-search_conditions'); // search_conditions_tag.setAttribute(
-  //     'onclick',
-  //     'search_conditions_select("search_conditions_' + global_num['search_conditions_count'] + '","on")');
-  //グループ化ボタン用divタグ
+  search_conditions_tag.id = search_conditions_id;
+  search_conditions_tag.classList.add('p-search_conditions');
 
-  var grouping_select_tag = document.createElement('div');
-  grouping_select_tag.id = 'grouping_select_' + _global_1.global_num['search_conditions_count'];
-  grouping_select_tag.classList.add('p-search_conditions__grouping_select--type1');
-  grouping_select_tag.setAttribute('onclick', 'grouping_select("grouping_select_' + _global_1.global_num['search_conditions_count'] + '","on")');
-  grouping_select_tag.textContent = 'Grp化選択';
-  search_conditions_tag.appendChild(grouping_select_tag); //selectタグを作成。またその中にoptionタグを追加していく。
+  var search_conditions_menu_tag = _search_conditions_menu_1.search_conditions_menu(search_group_id, search_conditions_id);
+
+  search_conditions_tag.appendChild(search_conditions_menu_tag.menu);
+  search_conditions_tag.appendChild(search_conditions_menu_tag.menu_list); //selectタグを作成。またその中にoptionタグを追加していく。
 
   var select_tag = document.createElement('select');
   select_tag.classList.add('p-search_conditions__field_select');
@@ -438,23 +605,14 @@ var search_conditions_add = function search_conditions_add(group_id) {
   input_tag_text.classList.add('p-search_conditions__search_text');
   input_tag_text.type = 'text';
   input_tag_text.value = '';
-  search_conditions_tag.appendChild(input_tag_text); //条件削除ボタンを作成し、：検索条件ボックスへ追加
+  search_conditions_tag.appendChild(input_tag_text); //押下された条件追加ボタンを取得し、その次に新なフィールド(divタグ)を追加。
 
-  var input_tag_button_del = document.createElement('input');
-  input_tag_button_del.type = 'button';
-  input_tag_button_del.classList.add('p-search_conditions__delete');
-  input_tag_button_del.value = '条件削除';
-  input_tag_button_del.setAttribute('onclick', 'search_conditions_delete("search_conditions_' + _global_1.global_num['search_conditions_count'] + '")');
-  search_conditions_tag.appendChild(input_tag_button_del); //押下された条件追加ボタンを取得し、その次に新なフィールド(divタグ)を追加。
+  var elem = document.getElementById(search_group_id);
+  elem.appendChild(search_conditions_tag); //実行中のメニューは非表示にしないよう実行中イベントへ登録
 
-  var elem = document.getElementById(group_id);
-  elem.appendChild(search_conditions_tag); // if (group_id == 0) {
-  //     elem = document.getElementById("search_group_1");
-  //     elem.appendChild(search_conditions_tag);
-  // } else {
-  //     elem = document.getElementById("search_conditions_" + global_num['search_conditions_count']);
-  //     elem.parentNode.insertBefore(search_conditions_tag, elem.nextSibling);
-  // }
+  var menu_list_ul = elem.querySelector('#' + search_group_id + '_ul');
+
+  _global_1.global_runing_events.push(menu_list_ul.id);
 };
 
 exports.search_conditions_add = search_conditions_add;
@@ -483,6 +641,44 @@ var search_conditions_delete = function search_conditions_delete(search_conditio
 };
 
 exports.search_conditions_delete = search_conditions_delete;
+
+/***/ }),
+
+/***/ "./app/static/ts/input/search_conditions_menu_swich.ts":
+/*!*************************************************************!*\
+  !*** ./app/static/ts/input/search_conditions_menu_swich.ts ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.search_conditions_menu_swich = void 0;
+
+var _global_1 = __webpack_require__(/*! ../global/_global */ "./app/static/ts/global/_global.ts"); //グローバル変数
+
+/**
+ * 検索条件メニューの表示/非表示の切り替えを行う。
+ * @param 選択対象の検索条件id(search_conditions_id)
+ */
+
+
+var search_conditions_menu_swich = function search_conditions_menu_swich(search_conditions_id) {
+  var menu_list = document.querySelector('#' + search_conditions_id + '_menu_list');
+  var menu_list_ul = menu_list.querySelector('.p-operation_menu__ul'); //実行中のメニューは非表示にしないよう実行中イベントへ登録
+
+  _global_1.global_runing_events.push(menu_list_ul.id);
+
+  if (menu_list_ul.classList.contains('u-display--none')) {
+    menu_list_ul.classList.remove('u-display--none');
+  } else {
+    menu_list_ul.classList.add('u-display--none');
+  }
+};
+
+exports.search_conditions_menu_swich = search_conditions_menu_swich;
 
 /***/ }),
 
@@ -594,14 +790,19 @@ var test = __importStar(__webpack_require__(/*! ./_test */ "./app/static/ts/_tes
 
 var _init_screen_1 = __webpack_require__(/*! ./etc/_init_screen */ "./app/static/ts/etc/_init_screen.ts");
 
+var _menu_off_1 = __webpack_require__(/*! ./etc/_menu_off */ "./app/static/ts/etc/_menu_off.ts");
+
 var search_conditions_add_1 = __webpack_require__(/*! ./input/search_conditions_add */ "./app/static/ts/input/search_conditions_add.ts");
 
 var search_field_change_1 = __webpack_require__(/*! ./input/search_field_change */ "./app/static/ts/input/search_field_change.ts");
 
-var search_conditions_delete_1 = __webpack_require__(/*! ./input/search_conditions_delete */ "./app/static/ts/input/search_conditions_delete.ts"); //import {search_conditions_select} from './input/search_conditions_select';
+var search_conditions_delete_1 = __webpack_require__(/*! ./input/search_conditions_delete */ "./app/static/ts/input/search_conditions_delete.ts");
 
+var search_conditions_menu_swich_1 = __webpack_require__(/*! ./input/search_conditions_menu_swich */ "./app/static/ts/input/search_conditions_menu_swich.ts");
 
-var group_nav_swich_1 = __webpack_require__(/*! ./group/group_nav_swich */ "./app/static/ts/group/group_nav_swich.ts");
+var group_menu_swich_1 = __webpack_require__(/*! ./group/group_menu_swich */ "./app/static/ts/group/group_menu_swich.ts");
+
+var _grouping_start_1 = __webpack_require__(/*! ./group/_grouping_start */ "./app/static/ts/group/_grouping_start.ts");
 
 var search_main_1 = __webpack_require__(/*! ./search/search_main */ "./app/static/ts/search/search_main.ts");
 
@@ -634,12 +835,25 @@ window.search_conditions_delete = function (search_conditions_id) {
   search_conditions_delete_1.search_conditions_delete(search_conditions_id);
 };
 
-window.group_nav_swich = function (search_group_id, swich) {
-  group_nav_swich_1.group_nav_swich(search_group_id, swich);
+window.search_conditions_menu_swich = function (search_conditions_id) {
+  search_conditions_menu_swich_1.search_conditions_menu_swich(search_conditions_id);
+};
+
+window.group_menu_swich = function (search_group_id) {
+  group_menu_swich_1.group_menu_swich(search_group_id);
+};
+
+window.grouping_start = function (search_group_id, search_conditions_id) {
+  _grouping_start_1.grouping_start(search_group_id, search_conditions_id);
 }; //初画面表示
 
 
-_init_screen_1.init_screen();
+_init_screen_1.init_screen(); //クリックイベントの終了処理
+
+
+window.addEventListener("click", function (e) {
+  _menu_off_1.menu_off();
+});
 
 /***/ }),
 

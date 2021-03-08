@@ -28,8 +28,17 @@ export const search_conditions_menu = (search_group_id: string, search_condition
     let nav_tag = document.createElement('nav');
     nav_tag.classList.add('p-operation_menu__nav--type2');
     nav_tag.innerText = '…';
-    nav_tag.setAttribute('onclick', 'search_conditions_menu_swich("' + search_conditions_id + '","on")');
+    nav_tag.setAttribute('onclick', 'search_conditions_menu_swich("' + search_conditions_id + '")');
     menu_tag.appendChild(nav_tag);
+
+    //メニュー内のグループ化用チェックボックス
+    let check_box_tag = document.createElement('input');
+    check_box_tag.type = 'checkbox';
+    check_box_tag.classList.add('p-operation_menu__grouping_selecter','u-display--none');
+    //check_box_tag.innerText = '…';
+    check_box_tag.setAttribute('onclick', 'grouping_finished("' + search_group_id + '","' + search_conditions_id + '")');
+    menu_tag.appendChild(check_box_tag);
+
 
     //メニューリスト
     let menu_list_tag = document.createElement('div');

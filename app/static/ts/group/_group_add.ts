@@ -2,7 +2,7 @@ import { global_num, global_num_add, } from '../global/_global';    //グロー�
 
 /**
  * 検索条件フィールドを追加する。
- * @param insertion_position 追加位置の指定。初期表示時はfirst。それ以外は検索条件id(search_conditions_id)を指定する。
+ * @param insertion_position 追加位置の指定。初期表示時は''。それ以外は検索条件id(search_conditions_id)を指定する。
  */
 export const group_add = (insertion_position: string): void => {
     /**ulタグ内にliタグを設定して返す。
@@ -61,12 +61,14 @@ export const group_add = (insertion_position: string): void => {
     div_tag2.appendChild(list_add(ul_tag, lists)); //最後にulタグをnavタグへ追加
     fieldset_tag.appendChild(div_tag2);
 
+    console.log(insertion_position);
     let elem;
-    if (insertion_position == 'first') {
-        elem = document.getElementById("search_conditions_top");
+    if (insertion_position == '') {
+        elem = document.querySelector("#search_conditions_top");
         elem.appendChild(fieldset_tag);
     } else {
-        elem = document.getElementById(insertion_position);
+        elem = document.querySelector('#'+insertion_position);
+        console.log(elem);
         elem.parentNode.insertBefore(fieldset_tag, elem.nextSibling);
     }
 }

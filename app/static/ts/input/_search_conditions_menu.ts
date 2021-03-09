@@ -1,5 +1,3 @@
-import { global_num, global_num_add, global_search_conditions_table } from '../global/_global';    //グローバル変数
-
 /**
  * 検索条件フィールドを追加する。
  * @param
@@ -36,9 +34,8 @@ export const search_conditions_menu = (search_group_id: string, search_condition
     check_box_tag.type = 'checkbox';
     check_box_tag.classList.add('p-operation_menu__grouping_selecter','u-display--none');
     //check_box_tag.innerText = '…';
-    check_box_tag.setAttribute('onclick', 'grouping_finished("' + search_group_id + '","' + search_conditions_id + '")');
+    check_box_tag.setAttribute('onclick', 'grouping_finished("' + search_group_id + '")');
     menu_tag.appendChild(check_box_tag);
-
 
     //メニューリスト
     let menu_list_tag = document.createElement('div');
@@ -54,6 +51,5 @@ export const search_conditions_menu = (search_group_id: string, search_condition
     ];
     menu_list_tag.appendChild(list_add(ul_tag, lists)); //最後にulタグをnavタグへ追加
 
-    return { 'menu': menu_tag, 'menu_list': menu_list_tag };//あとで
-
+    return { 'menu': menu_tag, 'menu_list': menu_list_tag };
 }

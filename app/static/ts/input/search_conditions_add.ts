@@ -1,4 +1,4 @@
-import { global_num, global_num_add, global_search_conditions_table,global_runing_events, } from '../global/_global';    //グローバル変数
+import { global_num, global_num_add, global_search_conditions_table, global_runing_events, } from '../global/_global';    //グローバル変数
 import { search_conditions_menu, } from './_search_conditions_menu';
 
 /**
@@ -66,7 +66,6 @@ export const search_conditions_add = (search_group_id: string): void => {
     elem.appendChild(search_conditions_tag);
 
     //実行中のメニューは非表示にしないよう実行中イベントへ登録
-    let menu_list_ul = elem.querySelector('#'+search_group_id+'_ul');
+    let menu_list_ul = elem.querySelector('#' + search_group_id + '_ul');
     global_runing_events.push(menu_list_ul.id);
-
 }

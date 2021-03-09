@@ -1,4 +1,4 @@
-/**検索フィールドを削除。
+/**検索条件を削除。
  * @param 削除対象の検索条件id(search_conditions_id)
  */
 export const search_conditions_delete = (search_conditions_id: string): void => {

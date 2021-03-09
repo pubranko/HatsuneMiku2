@@ -7,7 +7,7 @@ import {group_add} from '../group/_group_add';
 
 export const init_screen = (): void => {
     window.addEventListener("load", (e) => {
-        group_add('');
+        group_add('',[]);
         search_conditions_add('search_group_1');
     });
 }

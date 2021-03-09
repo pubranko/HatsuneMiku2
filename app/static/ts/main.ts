@@ -11,6 +11,7 @@ import { search_conditions_menu_swich } from './input/search_conditions_menu_swi
 import { group_menu_swich } from './group/group_menu_swich';
 import { grouping_start } from './group/grouping_start';
 import { grouping_finished } from './group/grouping_finished';
+import { group_release } from './group/group_release';
 import { search_main } from './search/search_main';
 //import * as global from './global/_global';
 
@@ -25,6 +26,7 @@ export interface Window {
     group_menu_swich(search_group_id: string): void
     grouping_start(search_group_id: string, search_conditions_id: string): void
     grouping_finished(search_group_id: string, search_conditions_id: string): void
+    group_release(search_group_id: string): void;
     search_main(search_destination: string): void;
     addEventListener(event: string, func: any): void;
 }
@@ -39,7 +41,8 @@ window.search_conditions_delete = (search_conditions_id) => { search_conditions_
 window.search_conditions_menu_swich = (search_conditions_id) => { search_conditions_menu_swich(search_conditions_id); };
 window.group_menu_swich = (search_group_id) => { group_menu_swich(search_group_id); };
 window.grouping_start = (search_group_id, search_conditions_id) => { grouping_start(search_group_id, search_conditions_id); };
-window.grouping_finished = (search_group_id, search_conditions_id) => { grouping_finished(search_group_id, search_conditions_id); };
+window.grouping_finished = (search_group_id) => { grouping_finished(search_group_id); };
+window.group_release = (search_group_id) => { group_release(search_group_id); };
 
 
 //初画面表示

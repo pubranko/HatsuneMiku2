@@ -4,7 +4,7 @@ import { global_num, global_num_add, } from '../global/_global';    //グロー�
  * 検索条件フィールドを追加する。
  * @param insertion_position 追加位置の指定。初期表示時は''。それ以外は検索条件id(search_conditions_id)を指定する。
  */
-export const group_add = (insertion_position: string): void => {
+export const group_add = (insertion_position: string, move_target: Array<Element>): void => {
     /**ulタグ内にliタグを設定して返す。
      * @param ul_tag:対象のulタグエレメント。
      * @param lists:liごとの配列。配列の中は連想配列で各要素を渡す。
@@ -13,7 +13,12 @@ export const group_add = (insertion_position: string): void => {
         lists.forEach(dict => {
             let list_tag = document.createElement('li');
             list_tag.classList.add(dict['class_name']);
-            list_tag.setAttribute('onclick', dict['onclick']);
+            //例外：検索グループ１は解除禁止
+            if (search_group_id == 'search_group_1' && dict['menu'] == 'グループ解除') {
+                list_tag.classList.add('p-operation_menu__li--inactive');
+            } else {
+                list_tag.setAttribute('onclick', dict['onclick']);
+            }
             list_tag.innerHTML = dict['menu'];
             ul_tag.appendChild(list_tag);
         })
@@ -61,15 +66,16 @@ export const group_add = (insertion_position: string): void => {
     div_tag2.appendChild(list_add(ul_tag, lists)); //最後にulタグをnavタグへ追加
     fieldset_tag.appendChild(div_tag2);
 
-    console.log(insertion_position);
     let elem;
     if (insertion_position == '') {
         elem = document.querySelector("#search_conditions_top");
         elem.appendChild(fieldset_tag);
     } else {
-        elem = document.querySelector('#'+insertion_position);
-        console.log(elem);
+        elem = document.querySelector('#' + insertion_position);
         elem.parentNode.insertBefore(fieldset_tag, elem.nextSibling);
+        for (let target of move_target) {
+            fieldset_tag.appendChild(target);
+        }
     }
 }
 /* グループのイメージ

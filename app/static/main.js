@@ -115,7 +115,7 @@ var _group_add_1 = __webpack_require__(/*! ../group/_group_add */ "./app/static/
 
 var init_screen = function init_screen() {
   window.addEventListener("load", function (e) {
-    _group_add_1.group_add('');
+    _group_add_1.group_add('', []);
 
     search_conditions_add_1.search_conditions_add('search_group_1');
   });
@@ -290,7 +290,7 @@ var _global_1 = __webpack_require__(/*! ../global/_global */ "./app/static/ts/gl
  */
 
 
-var group_add = function group_add(insertion_position) {
+var group_add = function group_add(insertion_position, move_target) {
   /**ulタグ内にliタグを設定して返す。
    * @param ul_tag:対象のulタグエレメント。
    * @param lists:liごとの配列。配列の中は連想配列で各要素を渡す。
@@ -298,8 +298,14 @@ var group_add = function group_add(insertion_position) {
   var list_add = function list_add(ul_tag, lists) {
     lists.forEach(function (dict) {
       var list_tag = document.createElement('li');
-      list_tag.classList.add(dict['class_name']);
-      list_tag.setAttribute('onclick', dict['onclick']);
+      list_tag.classList.add(dict['class_name']); //例外：検索グループ１は解除禁止
+
+      if (search_group_id == 'search_group_1' && dict['menu'] == 'グループ解除') {
+        list_tag.classList.add('p-operation_menu__li--inactive');
+      } else {
+        list_tag.setAttribute('onclick', dict['onclick']);
+      }
+
       list_tag.innerHTML = dict['menu'];
       ul_tag.appendChild(list_tag);
     });
@@ -350,7 +356,6 @@ var group_add = function group_add(insertion_position) {
   div_tag2.appendChild(list_add(ul_tag, lists)); //最後にulタグをnavタグへ追加
 
   fieldset_tag.appendChild(div_tag2);
-  console.log(insertion_position);
   var elem;
 
   if (insertion_position == '') {
@@ -358,8 +363,12 @@ var group_add = function group_add(insertion_position) {
     elem.appendChild(fieldset_tag);
   } else {
     elem = document.querySelector('#' + insertion_position);
-    console.log(elem);
     elem.parentNode.insertBefore(fieldset_tag, elem.nextSibling);
+
+    for (var _i = 0, move_target_1 = move_target; _i < move_target_1.length; _i++) {
+      var target = move_target_1[_i];
+      fieldset_tag.appendChild(target);
+    }
   }
 };
 
@@ -420,6 +429,36 @@ exports.group_menu_swich = group_menu_swich;
 
 /***/ }),
 
+/***/ "./app/static/ts/group/group_release.ts":
+/*!**********************************************!*\
+  !*** ./app/static/ts/group/group_release.ts ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.group_release = void 0;
+/**検索グループを削除。
+ * ただし削除対象の中の検索グループと検索条件は残す。
+ * @param 削除対象の検索グループid(search_group_id)
+ */
+
+var group_release = function group_release(search_group_id) {
+  var search_group = document.querySelector("#" + search_group_id);
+  var nodes = document.querySelectorAll('#' + search_group_id + '>.p-search_conditions , #' + search_group_id + '>.c-search_group');
+  nodes.forEach(function (node) {
+    search_group.parentNode.insertBefore(node, search_group);
+  });
+  search_group.parentNode.removeChild(search_group);
+};
+
+exports.group_release = group_release;
+
+/***/ }),
+
 /***/ "./app/static/ts/group/grouping_finished.ts":
 /*!**************************************************!*\
   !*** ./app/static/ts/group/grouping_finished.ts ***!
@@ -435,25 +474,39 @@ exports.grouping_finished = void 0;
 
 var _group_add_1 = __webpack_require__(/*! ../group/_group_add */ "./app/static/ts/group/_group_add.ts");
 /**
- *
- *
+ * 選択された２つの検索条件間の検索条件を全て、新しい検索グループの中へ移動する。
+ * 新しい検索グループは、選択された検索条件の下とする。
  * @param 検索グループID(search_group_id)
- * @param 検索条件ID(search_conditions_id)
  */
 
 
-var grouping_finished = function grouping_finished(search_group_id, search_conditions_id) {
+var grouping_finished = function grouping_finished(search_group_id) {
   var search_conditions = document.querySelectorAll('#' + search_group_id + '>.p-search_conditions');
+  var move_target = [];
+  var move_flg = false;
+  var insertion_position = '';
   search_conditions.forEach(function (search_condition) {
     var menu = document.querySelector('#' + search_condition.id + '_menu');
     var menu_nav = menu.querySelector("[class^='p-operation_menu__nav']");
     var menu_checkbox = menu.querySelector("[class^='p-operation_menu__grouping_selecter']");
+    /*２つのチェックされた検索条件間の検索条件を移動対象とする*/
+
+    if (menu_checkbox['checked'] == true) {
+      move_target.push(search_condition);
+      move_flg = !move_flg;
+      insertion_position = search_condition.id; //※2回めのtrueの結果のみ最終的に残す。
+    } else {
+      if (move_flg == true) {
+        move_target.push(search_condition);
+      }
+    }
+
+    menu_nav.classList.remove('u-display--none');
     menu_checkbox.classList.add('u-display--none');
     menu_checkbox['checked'] = false;
-    menu_nav.classList.remove('u-display--none');
   });
 
-  _group_add_1.group_add(search_conditions_id);
+  _group_add_1.group_add(insertion_position, move_target);
 };
 
 exports.grouping_finished = grouping_finished;
@@ -546,7 +599,7 @@ var search_conditions_menu = function search_conditions_menu(search_group_id, se
   check_box_tag.type = 'checkbox';
   check_box_tag.classList.add('p-operation_menu__grouping_selecter', 'u-display--none'); //check_box_tag.innerText = '…';
 
-  check_box_tag.setAttribute('onclick', 'grouping_finished("' + search_group_id + '","' + search_conditions_id + '")');
+  check_box_tag.setAttribute('onclick', 'grouping_finished("' + search_group_id + '")');
   menu_tag.appendChild(check_box_tag); //メニューリスト
 
   var menu_list_tag = document.createElement('div');
@@ -568,7 +621,7 @@ var search_conditions_menu = function search_conditions_menu(search_group_id, se
   return {
     'menu': menu_tag,
     'menu_list': menu_list_tag
-  }; //あとで
+  };
 };
 
 exports.search_conditions_menu = search_conditions_menu;
@@ -687,7 +740,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.search_conditions_delete = void 0;
-/**検索フィールドを削除。
+/**検索条件を削除。
  * @param 削除対象の検索条件id(search_conditions_id)
  */
 
@@ -862,6 +915,8 @@ var grouping_start_1 = __webpack_require__(/*! ./group/grouping_start */ "./app/
 
 var grouping_finished_1 = __webpack_require__(/*! ./group/grouping_finished */ "./app/static/ts/group/grouping_finished.ts");
 
+var group_release_1 = __webpack_require__(/*! ./group/group_release */ "./app/static/ts/group/group_release.ts");
+
 var search_main_1 = __webpack_require__(/*! ./search/search_main */ "./app/static/ts/search/search_main.ts");
 
 window.test1 = function () {
@@ -905,8 +960,12 @@ window.grouping_start = function (search_group_id, search_conditions_id) {
   grouping_start_1.grouping_start(search_group_id, search_conditions_id);
 };
 
-window.grouping_finished = function (search_group_id, search_conditions_id) {
-  grouping_finished_1.grouping_finished(search_group_id, search_conditions_id);
+window.grouping_finished = function (search_group_id) {
+  grouping_finished_1.grouping_finished(search_group_id);
+};
+
+window.group_release = function (search_group_id) {
+  group_release_1.group_release(search_group_id);
 }; //初画面表示
 
 

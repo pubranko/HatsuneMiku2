@@ -2,10 +2,19 @@
 // }
 
 .p-operation_menu__position {
-    float   : right;
-    position: relative;
-    right   : 2rem;
+    // float   : right;
+    // position: relative;
+    // right   : 2rem;
+
+    // vertical-align :middle;
+    // display:table-cell;
+
+    display: flex;
+    justify-content: right; /*左右中央揃え*/
+    align-items: center;     /*上下中央揃え*/
+    margin-right: -3rem;
 }
+
 
 .p-operation_menu__position--type2 {
     display: inline-block;

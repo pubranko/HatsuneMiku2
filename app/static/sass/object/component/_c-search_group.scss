@@ -1,7 +1,7 @@
 .c-search_group{
     //表示位置
-    //display: flex;
+    display:inline-block;   //中の要素に合わせて枠線を調整するため。
+    padding-right: 2rem;
     //形
     border: 0.1rem solid map-get($colors,search_group_border--type1);
-    max-width: 60rem;
 }

@@ -37,10 +37,6 @@ export const search_conditions_add = (search_group_id: string): void => {
     search_conditions_tag.id = search_conditions_id;
     search_conditions_tag.classList.add('p-search_conditions');
 
-    let search_conditions_menu_tag = search_conditions_menu(search_group_id, search_conditions_id);
-    search_conditions_tag.appendChild(search_conditions_menu_tag.menu);
-    search_conditions_tag.appendChild(search_conditions_menu_tag.menu_list);
-
     //selectタグを作成。またその中にoptionタグを追加していく。
     let select_tag = document.createElement('select');
     select_tag.classList.add('p-search_conditions__field_select');
@@ -60,6 +56,11 @@ export const search_conditions_add = (search_group_id: string): void => {
     input_tag_text.type = 'text';
     input_tag_text.value = '';
     search_conditions_tag.appendChild(input_tag_text);
+
+    //検索条件メニューボタン：検索条件ボックスへ追加
+    let search_conditions_menu_tag = search_conditions_menu(search_group_id, search_conditions_id);
+    search_conditions_tag.appendChild(search_conditions_menu_tag.menu);
+    search_conditions_tag.appendChild(search_conditions_menu_tag.menu_list);
 
     //押下された条件追加ボタンを取得し、その次に新なフィールド(divタグ)を追加。
     let elem = document.getElementById(search_group_id);

@@ -38,7 +38,7 @@ export const group_add = (insertion_position: string, move_target: Array<Element
 
     //グループメニュー
     let div_tag = document.createElement('div');
-    div_tag.classList.add('p-operation_menu__position', 'u-margin--t-150');
+    div_tag.classList.add('p-operation_menu__position');
     div_tag.id = search_group_id + '_menu';
 
     let nav_tag = document.createElement('nav');

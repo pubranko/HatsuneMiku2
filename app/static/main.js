@@ -325,7 +325,7 @@ var group_add = function group_add(insertion_position, move_target) {
   fieldset_tag.appendChild(legend_tag); //グループメニュー
 
   var div_tag = document.createElement('div');
-  div_tag.classList.add('p-operation_menu__position', 'u-margin--t-150');
+  div_tag.classList.add('p-operation_menu__position');
   div_tag.id = search_group_id + '_menu';
   var nav_tag = document.createElement('nav');
   nav_tag.classList.add('p-operation_menu__nav', 'u-margin--l80');
@@ -476,6 +476,7 @@ var _group_add_1 = __webpack_require__(/*! ../group/_group_add */ "./app/static/
 /**
  * 選択された２つの検索条件間の検索条件を全て、新しい検索グループの中へ移動する。
  * 新しい検索グループは、選択された検索条件の下とする。
+ * チェックが１つもなかった場合、キャンセルとして処理する。
  * @param 検索グループID(search_group_id)
  */
 
@@ -506,7 +507,9 @@ var grouping_finished = function grouping_finished(search_group_id) {
     menu_checkbox['checked'] = false;
   });
 
-  _group_add_1.group_add(insertion_position, move_target);
+  if (move_target.length > 0) {
+    _group_add_1.group_add(insertion_position, move_target);
+  }
 };
 
 exports.grouping_finished = grouping_finished;
@@ -680,12 +683,7 @@ var search_conditions_add = function search_conditions_add(search_group_id) {
 
   var search_conditions_tag = document.createElement('div');
   search_conditions_tag.id = search_conditions_id;
-  search_conditions_tag.classList.add('p-search_conditions');
-
-  var search_conditions_menu_tag = _search_conditions_menu_1.search_conditions_menu(search_group_id, search_conditions_id);
-
-  search_conditions_tag.appendChild(search_conditions_menu_tag.menu);
-  search_conditions_tag.appendChild(search_conditions_menu_tag.menu_list); //selectタグを作成。またその中にoptionタグを追加していく。
+  search_conditions_tag.classList.add('p-search_conditions'); //selectタグを作成。またその中にoptionタグを追加していく。
 
   var select_tag = document.createElement('select');
   select_tag.classList.add('p-search_conditions__field_select');
@@ -714,7 +712,12 @@ var search_conditions_add = function search_conditions_add(search_group_id) {
   input_tag_text.classList.add('p-search_conditions__search_text');
   input_tag_text.type = 'text';
   input_tag_text.value = '';
-  search_conditions_tag.appendChild(input_tag_text); //押下された条件追加ボタンを取得し、その次に新なフィールド(divタグ)を追加。
+  search_conditions_tag.appendChild(input_tag_text); //検索条件メニューボタン：検索条件ボックスへ追加
+
+  var search_conditions_menu_tag = _search_conditions_menu_1.search_conditions_menu(search_group_id, search_conditions_id);
+
+  search_conditions_tag.appendChild(search_conditions_menu_tag.menu);
+  search_conditions_tag.appendChild(search_conditions_menu_tag.menu_list); //押下された条件追加ボタンを取得し、その次に新なフィールド(divタグ)を追加。
 
   var elem = document.getElementById(search_group_id);
   elem.appendChild(search_conditions_tag); //実行中のメニューは非表示にしないよう実行中イベントへ登録

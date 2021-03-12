@@ -3,6 +3,7 @@ import { group_add } from '../group/_group_add';
 /**
  * 選択された２つの検索条件間の検索条件を全て、新しい検索グループの中へ移動する。
  * 新しい検索グループは、選択された検索条件の下とする。
+ * チェックが１つもなかった場合、キャンセルとして処理する。
  * @param 検索グループID(search_group_id)
  */
 export const grouping_finished = (search_group_id: string): void => {
@@ -10,7 +11,7 @@ export const grouping_finished = (search_group_id: string): void => {
     let search_conditions = document.querySelectorAll('#' + search_group_id + '>.p-search_conditions');
     let move_target: Array<Element> = [];
     let move_flg: boolean = false;
-    let insertion_position :string = '';
+    let insertion_position: string = '';
 
     search_conditions.forEach(search_condition => {
         let menu = document.querySelector('#' + search_condition.id + '_menu');
@@ -31,5 +32,5 @@ export const grouping_finished = (search_group_id: string): void => {
         menu_checkbox['checked'] = false;
     });
 
-    group_add(insertion_position,move_target);
+    if (move_target.length > 0) { group_add(insertion_position, move_target); }
 }

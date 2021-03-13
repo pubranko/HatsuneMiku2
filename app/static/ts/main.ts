@@ -24,7 +24,7 @@ export interface Window {
     search_conditions_delete(search_conditions_id: string): void;
     search_conditions_menu_swich(search_conditions_id: string): void
     group_menu_swich(search_group_id: string): void
-    grouping_start(search_conditions_id: string): void
+    grouping_start(selected_id: string): void
     grouping_finished(): void
     group_release(search_group_id: string): void;
     search_main(search_destination: string): void;
@@ -40,7 +40,7 @@ window.search_field_change = (search_conditions_id, option_type) => { search_fie
 window.search_conditions_delete = (search_conditions_id) => { search_conditions_delete(search_conditions_id); };
 window.search_conditions_menu_swich = (search_conditions_id) => { search_conditions_menu_swich(search_conditions_id); };
 window.group_menu_swich = (search_group_id) => { group_menu_swich(search_group_id); };
-window.grouping_start = (search_conditions_id) => { grouping_start(search_conditions_id); };
+window.grouping_start = (selected_id) => { grouping_start(selected_id); };
 window.grouping_finished = () => { grouping_finished(); };
 window.group_release = (search_group_id) => { group_release(search_group_id); };
 

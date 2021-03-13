@@ -1,5 +1,6 @@
 import { global_num, global_num_add, global_search_conditions_table, global_runing_events, } from '../global/_global';    //グローバル変数
 import { search_conditions_menu, } from './_search_conditions_menu';
+import {menu_grouping_control} from '../etc/_menu_grouping_control';
 
 /**
  * 検索条件フィールドを追加する。
@@ -69,4 +70,7 @@ export const search_conditions_add = (search_group_id: string): void => {
     //実行中のメニューは非表示にしないよう実行中イベントへ登録
     let menu_list_ul = elem.querySelector('#' + search_group_id + '_ul');
     global_runing_events.push(menu_list_ul.id);
+
+    menu_grouping_control(search_group_id);
+
 }

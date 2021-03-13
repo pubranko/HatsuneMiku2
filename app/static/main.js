@@ -125,6 +125,43 @@ exports.init_screen = init_screen;
 
 /***/ }),
 
+/***/ "./app/static/ts/etc/_menu_grouping_control.ts":
+/*!*****************************************************!*\
+  !*** ./app/static/ts/etc/_menu_grouping_control.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.menu_grouping_control = void 0;
+/**
+ * 各検索グループ内で要素(検索条件と検索グループ)の数が３を超えた場合にのみグループ化のメニューを表示する。
+ * 要素が３未満の場合はグループメニューより検索条件グループ化のメニューを非表示にする。
+ * @param コントロールしたい検索グループID(search_group_id)
+ */
+
+var menu_grouping_control = function menu_grouping_control(search_group_id) {
+  var search_group = document.querySelector('#' + search_group_id);
+  var conditions_or_groups = document.querySelectorAll('#' + search_group.id + '>.p-search_conditions ,' + '#' + search_group.id + '>.c-search_group');
+  conditions_or_groups.forEach(function (condition_or_group) {
+    var menu_list = document.querySelector('#' + condition_or_group.id + '_menu_list .p-operation_menu__li--DOM__type1');
+    console.log(menu_list.classList.contains('u-display--none'));
+
+    if (conditions_or_groups.length < 3) {
+      menu_list.classList.add('u-display--none');
+    } else {
+      menu_list.classList.remove('u-display--none');
+    }
+  });
+};
+
+exports.menu_grouping_control = menu_grouping_control;
+
+/***/ }),
+
 /***/ "./app/static/ts/etc/_menu_off.ts":
 /*!****************************************!*\
   !*** ./app/static/ts/etc/_menu_off.ts ***!
@@ -293,6 +330,8 @@ exports.group_add = void 0;
 
 var _global_1 = __webpack_require__(/*! ../global/_global */ "./app/static/ts/global/_global.ts"); //グローバル変数
 
+
+var _menu_grouping_control_1 = __webpack_require__(/*! ../etc/_menu_grouping_control */ "./app/static/ts/etc/_menu_grouping_control.ts");
 /**
  * 検索条件フィールドを追加する。
  * @param insertion_position 追加位置の指定。初期表示時は''。それ以外は検索条件id(search_conditions_id)を指定する。
@@ -367,6 +406,10 @@ var group_add = function group_add(insertion_position, move_target) {
     'class_name': 'p-operation_menu__li',
     'onclick': 'group_release("' + search_group_id + '")',
     'menu': 'グループ解除'
+  }, {
+    'class_name': 'p-operation_menu__li--DOM__type1',
+    'onclick': 'grouping_start("' + search_group_id + '")',
+    'menu': '検索条件グループ化'
   }];
   menu_list_tag.appendChild(list_add(ul_tag, lists)); //最後にulタグをnavタグへ追加
 
@@ -384,6 +427,8 @@ var group_add = function group_add(insertion_position, move_target) {
       var target = move_target_1[_i];
       fieldset_tag.appendChild(target);
     }
+
+    _menu_grouping_control_1.menu_grouping_control(search_group_id);
   }
 };
 
@@ -491,6 +536,8 @@ var _group_add_1 = __webpack_require__(/*! ../group/_group_add */ "./app/static/
 
 var _global_1 = __webpack_require__(/*! ../global/_global */ "./app/static/ts/global/_global.ts"); //グローバル変数
 
+
+var _menu_grouping_control_1 = __webpack_require__(/*! ../etc/_menu_grouping_control */ "./app/static/ts/etc/_menu_grouping_control.ts");
 /**
  * 選択された２つの検索条件間の検索条件を全て、新しい検索グループの中へ移動する。
  * 新しい検索グループは、選択された検索条件の下とする。
@@ -530,6 +577,8 @@ var grouping_finished = function grouping_finished() {
     _group_add_1.group_add(insertion_position, move_target);
   }
 
+  _menu_grouping_control_1.menu_grouping_control(_global_1.global_string['global_grouping_id']);
+
   _global_1.global_string_edit('global_grouping_id', '');
 };
 
@@ -552,32 +601,36 @@ exports.grouping_start = void 0;
 
 var _global_1 = __webpack_require__(/*! ../global/_global */ "./app/static/ts/global/_global.ts"); //グローバル変数
 
+
+var _menu_grouping_control_1 = __webpack_require__(/*! ../etc/_menu_grouping_control */ "./app/static/ts/etc/_menu_grouping_control.ts");
 /**
- * 指定された検索グループ直下の検索条件に対して、グループ化を行うための準備を行う。
- * 検索条件メニューをチェックボックスにする。指定された検索条件はチェック済みにする。
- * @param 検索条件ID(search_conditions_id)
+ * 選択されたID(検索条件または検索グループ)に対して、グループ化を行うための準備を行う。
+ * メニューボタンをチェックボックスにする。選択されたIDはチェック済みにする。
+ * @param 選択されたID(selected_id)
  */
 
 
-var grouping_start = function grouping_start(search_conditions_id) {
-  var select = document.querySelector('#' + search_conditions_id);
+var grouping_start = function grouping_start(selected_id) {
+  var select = document.querySelector('#' + selected_id);
   var search_group = select.parentElement;
-  var conditions_or_groups = document.querySelectorAll('#' + search_group.id + '>.p-search_conditions ,' + '#' + search_group.id + '>.c-search_group');
 
   _global_1.global_string_edit('global_grouping_id', search_group.id);
 
+  var conditions_or_groups = document.querySelectorAll('#' + search_group.id + '>.p-search_conditions ,' + '#' + search_group.id + '>.c-search_group');
   conditions_or_groups.forEach(function (condition_or_group) {
     var menu = document.querySelector('#' + condition_or_group.id + '_menu');
     var menu_nav = menu.querySelector("[class^='p-operation_menu__nav']");
     var menu_checkbox = menu.querySelector("[class^='p-operation_menu__grouping_selecter']");
     menu_checkbox.classList.remove('u-display--none');
 
-    if (search_conditions_id == condition_or_group.id) {
+    if (selected_id == condition_or_group.id) {
       menu_checkbox['checked'] = true;
     }
 
     menu_nav.classList.add('u-display--none');
   });
+
+  _menu_grouping_control_1.menu_grouping_control(search_group.id);
 };
 
 exports.grouping_start = grouping_start;
@@ -639,7 +692,7 @@ var search_conditions_menu = function search_conditions_menu(search_group_id, se
   var ul_tag = document.createElement('ul');
   ul_tag.classList.add('p-operation_menu__ul', 'u-display--none', 'u-margin--t0');
   var lists = [{
-    'class_name': 'p-operation_menu__li',
+    'class_name': 'p-operation_menu__li--DOM__type1',
     'onclick': 'grouping_start("' + search_conditions_id + '")',
     'menu': '検索条件グループ化'
   }, {
@@ -676,6 +729,8 @@ var _global_1 = __webpack_require__(/*! ../global/_global */ "./app/static/ts/gl
 
 
 var _search_conditions_menu_1 = __webpack_require__(/*! ./_search_conditions_menu */ "./app/static/ts/input/_search_conditions_menu.ts");
+
+var _menu_grouping_control_1 = __webpack_require__(/*! ../etc/_menu_grouping_control */ "./app/static/ts/etc/_menu_grouping_control.ts");
 /**
  * 検索条件フィールドを追加する。
  * @param search_group_id 検索条件を追加するグループID。
@@ -753,6 +808,8 @@ var search_conditions_add = function search_conditions_add(search_group_id) {
   var menu_list_ul = elem.querySelector('#' + search_group_id + '_ul');
 
   _global_1.global_runing_events.push(menu_list_ul.id);
+
+  _menu_grouping_control_1.menu_grouping_control(search_group_id);
 };
 
 exports.search_conditions_add = search_conditions_add;
@@ -763,7 +820,7 @@ exports.search_conditions_add = search_conditions_add;
 /*!*********************************************************!*\
   !*** ./app/static/ts/input/search_conditions_delete.ts ***!
   \*********************************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 
@@ -771,13 +828,19 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.search_conditions_delete = void 0;
+
+var _menu_grouping_control_1 = __webpack_require__(/*! ../etc/_menu_grouping_control */ "./app/static/ts/etc/_menu_grouping_control.ts");
 /**検索条件を削除。
  * @param 削除対象の検索条件id(search_conditions_id)
  */
 
+
 var search_conditions_delete = function search_conditions_delete(search_conditions_id) {
   var search_conditions = document.querySelector("#" + search_conditions_id);
-  search_conditions.parentNode.removeChild(search_conditions);
+  var search_group = search_conditions.parentElement;
+  search_conditions.remove();
+
+  _menu_grouping_control_1.menu_grouping_control(search_group.id);
 };
 
 exports.search_conditions_delete = search_conditions_delete;
@@ -987,8 +1050,8 @@ window.group_menu_swich = function (search_group_id) {
   group_menu_swich_1.group_menu_swich(search_group_id);
 };
 
-window.grouping_start = function (search_conditions_id) {
-  grouping_start_1.grouping_start(search_conditions_id);
+window.grouping_start = function (selected_id) {
+  grouping_start_1.grouping_start(selected_id);
 };
 
 window.grouping_finished = function () {

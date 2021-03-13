@@ -58,10 +58,11 @@ form_controller.js時代の関数
 
 2021/3/12 残課題
 ok・グループ化の際、キャンセルの考慮。
-・グループ化の際の要素数３を超えないと意味がない。チェック強化。
+ok・グループ化の際の要素数３を超えないと意味がない。チェック強化。
 ok・グループ化に検索条件だけでなく検索グループも含める。
-  querySelectorAll('#' + search_group_id + '>.p-search_conditions , #' + search_group_id + '>.c-search_group');
 ・querySelecterでなるべく行うよう見直し。
 ・querySelecterで前方一致の正規表現で行うよう見直し
   menu.querySelector("[class^='p-operation_menu__nav']");
 ・チェックボックスのcss作成(かっこよく！)
+・メニューの共通化
+・and or の切り替え

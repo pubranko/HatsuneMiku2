@@ -1,5 +1,6 @@
 import { group_add } from '../group/_group_add';
 import { global_string, global_string_edit, } from '../global/_global';    //グローバル変数
+import {menu_grouping_control} from '../etc/_menu_grouping_control';
 
 /**
  * 選択された２つの検索条件間の検索条件を全て、新しい検索グループの中へ移動する。
@@ -38,5 +39,6 @@ export const grouping_finished = (): void => {
     });
 
     if (move_target.length > 0) { group_add(insertion_position, move_target); }
+    menu_grouping_control(global_string['global_grouping_id']);
     global_string_edit('global_grouping_id', '');
 }

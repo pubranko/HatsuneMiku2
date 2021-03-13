@@ -33,7 +33,6 @@ export const search_conditions_menu = (search_group_id: string, search_condition
     let check_box_tag = document.createElement('input');
     check_box_tag.type = 'checkbox';
     check_box_tag.classList.add('p-operation_menu__grouping_selecter','u-display--none');
-    //check_box_tag.innerText = '…';
     check_box_tag.setAttribute('onclick', 'grouping_finished("' + search_group_id + '")');
     menu_tag.appendChild(check_box_tag);
 
@@ -46,7 +45,7 @@ export const search_conditions_menu = (search_group_id: string, search_condition
     ul_tag.classList.add('p-operation_menu__ul', 'u-display--none', 'u-margin--t0');
 
     let lists = [       //liタグの内容を配列・連想配列で生成
-        { 'class_name': 'p-operation_menu__li', 'onclick': 'grouping_start("' + search_group_id + '","' + search_conditions_id + '")', 'menu': '検索条件グループ化' },
+        { 'class_name': 'p-operation_menu__li', 'onclick': 'grouping_start("' + search_conditions_id + '")', 'menu': '検索条件グループ化' },
         { 'class_name': 'p-operation_menu__li', 'onclick': 'search_conditions_delete("' + search_conditions_id + '")', 'menu': '検索条件削除' },
     ];
     menu_list_tag.appendChild(list_add(ul_tag, lists)); //最後にulタグをnavタグへ追加

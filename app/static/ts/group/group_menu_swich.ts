@@ -2,7 +2,7 @@ import { global_runing_events } from '../global/_global';    //グローバル�
 
 /**
  * グループメニューの表示/非表示の切り替えを行う。。
- * @param 選択対象の検索条件id(search_group_id)
+ * @param 選択対象の検索グループid(search_group_id)
  */
 export const group_menu_swich = (search_group_id: string): void => {
 

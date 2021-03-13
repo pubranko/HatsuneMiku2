@@ -12,6 +12,7 @@ import { group_menu_swich } from './group/group_menu_swich';
 import { grouping_start } from './group/grouping_start';
 import { grouping_finished } from './group/grouping_finished';
 import { group_release } from './group/group_release';
+import { group_conjunction_change } from './group/group_conjunction_change';
 import { search_main } from './search/search_main';
 //import * as global from './global/_global';
 
@@ -27,6 +28,7 @@ export interface Window {
     grouping_start(selected_id: string): void
     grouping_finished(): void
     group_release(search_group_id: string): void;
+    group_conjunction_change(search_group_id: string):void;
     search_main(search_destination: string): void;
     addEventListener(event: string, func: any): void;
 }
@@ -43,6 +45,7 @@ window.group_menu_swich = (search_group_id) => { group_menu_swich(search_group_i
 window.grouping_start = (selected_id) => { grouping_start(selected_id); };
 window.grouping_finished = () => { grouping_finished(); };
 window.group_release = (search_group_id) => { group_release(search_group_id); };
+window.group_conjunction_change = (search_group_id) => { group_conjunction_change(search_group_id); };
 
 
 //初画面表示

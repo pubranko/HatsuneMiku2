@@ -34,7 +34,7 @@ export const group_add = (insertion_position: string, move_target: Array<Element
     fieldset_tag.id = search_group_id;
 
     let legend_tag = document.createElement('legend');
-    legend_tag.innerHTML = search_group_id + '(And結合)';
+    legend_tag.innerHTML = 'グループ内の条件をANDで結合';
     fieldset_tag.appendChild(legend_tag);
 
     //グループメニュー
@@ -68,7 +68,7 @@ export const group_add = (insertion_position: string, move_target: Array<Element
 
     let lists = [       //liタグの内容を配列・連想配列で生成
         { 'class_name': 'p-operation_menu__li', 'onclick': 'search_conditions_add("' + search_group_id + '")', 'menu': '検索条件追加' },
-        { 'class_name': 'p-operation_menu__li', 'onclick': 'grouping_conditions_change("' + search_group_id + '")', 'menu': 'AND/OR切り替え' },
+        { 'class_name': 'p-operation_menu__li', 'onclick': 'group_conjunction_change("' + search_group_id + '")', 'menu': 'AND/OR切り替え' },
         { 'class_name': 'p-operation_menu__li', 'onclick': 'group_release("' + search_group_id + '")', 'menu': 'グループ解除' },
         { 'class_name': 'p-operation_menu__li--DOM__type1', 'onclick': 'grouping_start("' + search_group_id + '")', 'menu': '検索条件グループ化' },
     ];

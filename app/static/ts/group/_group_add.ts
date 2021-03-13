@@ -1,4 +1,5 @@
 import { global_num, global_num_add, } from '../global/_global';    //グローバル変数
+import {menu_grouping_control} from '../etc/_menu_grouping_control';
 
 /**
  * 検索条件フィールドを追加する。
@@ -69,6 +70,7 @@ export const group_add = (insertion_position: string, move_target: Array<Element
         { 'class_name': 'p-operation_menu__li', 'onclick': 'search_conditions_add("' + search_group_id + '")', 'menu': '検索条件追加' },
         { 'class_name': 'p-operation_menu__li', 'onclick': 'grouping_conditions_change("' + search_group_id + '")', 'menu': 'AND/OR切り替え' },
         { 'class_name': 'p-operation_menu__li', 'onclick': 'group_release("' + search_group_id + '")', 'menu': 'グループ解除' },
+        { 'class_name': 'p-operation_menu__li--DOM__type1', 'onclick': 'grouping_start("' + search_group_id + '")', 'menu': '検索条件グループ化' },
     ];
 
     menu_list_tag.appendChild(list_add(ul_tag, lists)); //最後にulタグをnavタグへ追加
@@ -84,6 +86,7 @@ export const group_add = (insertion_position: string, move_target: Array<Element
         for (let target of move_target) {
             fieldset_tag.appendChild(target);
         }
+        menu_grouping_control(search_group_id);
     }
 }
 /* グループのイメージ

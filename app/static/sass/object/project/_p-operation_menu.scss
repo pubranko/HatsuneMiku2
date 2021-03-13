@@ -98,3 +98,7 @@
         background     : map-get($colors, group_menu_background--type2);
     }
 }
+//DOM用のクラス
+.p-operation_menu__li--DOM__type1 {
+    @extend .p-operation_menu__li;
+}

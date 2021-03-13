@@ -11,7 +11,6 @@ router = APIRouter(
     responses={404: {'description': 'そのパスは不正です'}},
 )
 
-
 @router.post('/')
 async def news_clip(search_query: SearchQuery):
     print(type(search_query))

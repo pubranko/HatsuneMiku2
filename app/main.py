@@ -5,6 +5,7 @@ from fastapi.templating import Jinja2Templates
 from routers import items, users,admin,test,news_clip
 from dependencies import get_query_token, get_token_header
 from models.SolrNewsClip import SolrNewsClip       #プロジェクト内モジュール
+from fastapi.responses import StreamingResponse
 
 #from fastapi_csrf_protect import CsrfProtect
 #from fastapi_csrf_protect.exceptions import CsrfProtectError
@@ -33,3 +34,7 @@ async def root(request:Request):
     #lists = [1,2,3,4]
     #return templates.TemplateResponse('sample.html', {'request': request, 'id': id,'lists':lists})
 
+@app.get('/favicon.ico')
+async def favicon():
+    file_like = open('static/favicons/favicon.ico', mode="rb")
+    return StreamingResponse(file_like, media_type="image/png")

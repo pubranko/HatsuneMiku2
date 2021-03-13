@@ -369,7 +369,7 @@ var group_add = function group_add(insertion_position, move_target) {
   fieldset_tag.classList.add('c-search_group');
   fieldset_tag.id = search_group_id;
   var legend_tag = document.createElement('legend');
-  legend_tag.innerHTML = search_group_id + '(And結合)';
+  legend_tag.innerHTML = 'グループ内の条件をANDで結合';
   fieldset_tag.appendChild(legend_tag); //グループメニュー
 
   var menu_tag = document.createElement('div');
@@ -400,7 +400,7 @@ var group_add = function group_add(insertion_position, move_target) {
     'menu': '検索条件追加'
   }, {
     'class_name': 'p-operation_menu__li',
-    'onclick': 'grouping_conditions_change("' + search_group_id + '")',
+    'onclick': 'group_conjunction_change("' + search_group_id + '")',
     'menu': 'AND/OR切り替え'
   }, {
     'class_name': 'p-operation_menu__li',
@@ -451,6 +451,37 @@ exports.group_add = group_add;
 
 /***/ }),
 
+/***/ "./app/static/ts/group/group_conjunction_change.ts":
+/*!*********************************************************!*\
+  !*** ./app/static/ts/group/group_conjunction_change.ts ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.group_conjunction_change = void 0;
+/**
+ * 検索グループ内のAND/ORの接続詞(conjunction)を切り替える。
+ * @param 選択対象の検索グループID(search_group_id)
+ */
+
+var group_conjunction_change = function group_conjunction_change(search_group_id) {
+  var legend_tag = document.querySelector('#' + search_group_id + '>legend');
+
+  if (legend_tag.innerHTML.match(/AND/) == null) {
+    legend_tag.innerHTML = legend_tag.innerHTML.replace(/OR/, 'AND');
+  } else {
+    legend_tag.innerHTML = legend_tag.innerHTML.replace(/AND/, 'OR');
+  }
+};
+
+exports.group_conjunction_change = group_conjunction_change;
+
+/***/ }),
+
 /***/ "./app/static/ts/group/group_menu_swich.ts":
 /*!*************************************************!*\
   !*** ./app/static/ts/group/group_menu_swich.ts ***!
@@ -468,7 +499,7 @@ var _global_1 = __webpack_require__(/*! ../global/_global */ "./app/static/ts/gl
 
 /**
  * グループメニューの表示/非表示の切り替えを行う。。
- * @param 選択対象の検索条件id(search_group_id)
+ * @param 選択対象の検索グループid(search_group_id)
  */
 
 
@@ -1011,6 +1042,8 @@ var grouping_finished_1 = __webpack_require__(/*! ./group/grouping_finished */ "
 
 var group_release_1 = __webpack_require__(/*! ./group/group_release */ "./app/static/ts/group/group_release.ts");
 
+var group_conjunction_change_1 = __webpack_require__(/*! ./group/group_conjunction_change */ "./app/static/ts/group/group_conjunction_change.ts");
+
 var search_main_1 = __webpack_require__(/*! ./search/search_main */ "./app/static/ts/search/search_main.ts");
 
 window.test1 = function () {
@@ -1060,6 +1093,10 @@ window.grouping_finished = function () {
 
 window.group_release = function (search_group_id) {
   group_release_1.group_release(search_group_id);
+};
+
+window.group_conjunction_change = function (search_group_id) {
+  group_conjunction_change_1.group_conjunction_change(search_group_id);
 }; //初画面表示
 
 

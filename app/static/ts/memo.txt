@@ -65,4 +65,4 @@ ok・グループ化に検索条件だけでなく検索グループも含める
   menu.querySelector("[class^='p-operation_menu__nav']");
 ・チェックボックスのcss作成(かっこよく！)
 ・メニューの共通化
-・and or の切り替え
+ok・and or の切り替え

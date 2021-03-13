@@ -37,21 +37,29 @@ export const group_add = (insertion_position: string, move_target: Array<Element
     fieldset_tag.appendChild(legend_tag);
 
     //グループメニュー
-    let div_tag = document.createElement('div');
-    div_tag.classList.add('p-operation_menu__position');
-    div_tag.id = search_group_id + '_menu';
+    let menu_tag = document.createElement('div');
+    menu_tag.classList.add('p-operation_menu__position');
+    menu_tag.id = search_group_id + '_menu';
 
     let nav_tag = document.createElement('nav');
     nav_tag.classList.add('p-operation_menu__nav', 'u-margin--l80');
     nav_tag.innerText = '…';
     nav_tag.setAttribute('onclick', 'group_menu_swich("' + search_group_id + '")');
-    div_tag.appendChild(nav_tag);
-    fieldset_tag.appendChild(div_tag);
+    menu_tag.appendChild(nav_tag);
+
+    //メニュー内のグループ化用チェックボックス
+    let check_box_tag = document.createElement('input');
+    check_box_tag.type = 'checkbox';
+    check_box_tag.classList.add('p-operation_menu__grouping_selecter', 'u-display--none');
+    check_box_tag.setAttribute('onclick', 'grouping_finished()');
+    menu_tag.appendChild(check_box_tag);
+
+    fieldset_tag.appendChild(menu_tag);
 
     //グループメニューリスト
-    let div_tag2 = document.createElement('div');
-    div_tag2.classList.add('p-operation_menu_list__position', 'u-margin--t50');
-    div_tag2.id = search_group_id + '_menu_list'
+    let menu_list_tag = document.createElement('div');
+    menu_list_tag.classList.add('p-operation_menu_list__position', 'u-margin--t50');
+    menu_list_tag.id = search_group_id + '_menu_list'
 
     let ul_tag = document.createElement('ul');
     ul_tag.classList.add('p-operation_menu__ul', 'u-display--none', 'u-margin--t0');
@@ -63,8 +71,8 @@ export const group_add = (insertion_position: string, move_target: Array<Element
         { 'class_name': 'p-operation_menu__li', 'onclick': 'group_release("' + search_group_id + '")', 'menu': 'グループ解除' },
     ];
 
-    div_tag2.appendChild(list_add(ul_tag, lists)); //最後にulタグをnavタグへ追加
-    fieldset_tag.appendChild(div_tag2);
+    menu_list_tag.appendChild(list_add(ul_tag, lists)); //最後にulタグをnavタグへ追加
+    fieldset_tag.appendChild(menu_list_tag);
 
     let elem;
     if (insertion_position == '') {

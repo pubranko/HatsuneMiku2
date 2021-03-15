@@ -27,28 +27,28 @@ export const global_search_conditions_table: { [key: number]: { [key: string]: a
     0: {
         'type': 'text',
         //{field_set : {field : フィールド名,range_flg:off,value1:値,}}
-        'field_set': { 'field': 'title & article', 'range_flg': false, 'value1': '' },
+        'field_set': { 'field': 'title | article', 'range_flg': 'off', 'value1': '' },
         'field_name': '件名or本文',
         'selected': true
     },
     1: {
         'type': 'text',
-        'field_set': { 'field': 'title', 'range_flg': false, 'value1': '' },
+        'field_set': { 'field': 'title', 'range_flg': 'off', 'value1': '' },
         'field_name': '件名'
     },
     2: {
         'type': 'text',
-        'field_set': { 'field': 'article', 'range_flg': false, 'value1': '' },
+        'field_set': { 'field': 'article', 'range_flg': 'off', 'value1': '' },
         'field_name': '本文'
     },
     3: {
         'type': 'date',
-        'field_set': { 'field': 'publish_date', 'range_flg': true, 'value1': '', 'value2': '' },
+        'field_set': { 'field': 'publish_date', 'range_flg': 'on', 'value1': '', 'value2': '' },
         'field_name': '記事公開日'
     },
     4: {
         'type': 'text',
-        'field_set': { 'field': 'issuer', 'range_flg': false, 'value1': '' },
+        'field_set': { 'field': 'issuer', 'range_flg': 'off', 'value1': '' },
         'field_name': '発行者'
     }
 }

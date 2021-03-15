@@ -66,3 +66,9 @@ ok・グループ化に検索条件だけでなく検索グループも含める
 ・チェックボックスのcss作成(かっこよく！)
 ・メニューの共通化
 ok・and or の切り替え
+
+
+{   "search_conditions":
+      ["(",{"field_set":{"field":"title & article","range_flg":false,"value1":""}},")"],
+    "page_number":1,
+    "details_number":10

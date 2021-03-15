@@ -245,8 +245,8 @@ exports.global_search_conditions_table = {
     'type': 'text',
     //{field_set : {field : フィールド名,range_flg:off,value1:値,}}
     'field_set': {
-      'field': 'title & article',
-      'range_flg': false,
+      'field': 'title | article',
+      'range_flg': 'off',
       'value1': ''
     },
     'field_name': '件名or本文',
@@ -256,7 +256,7 @@ exports.global_search_conditions_table = {
     'type': 'text',
     'field_set': {
       'field': 'title',
-      'range_flg': false,
+      'range_flg': 'off',
       'value1': ''
     },
     'field_name': '件名'
@@ -265,7 +265,7 @@ exports.global_search_conditions_table = {
     'type': 'text',
     'field_set': {
       'field': 'article',
-      'range_flg': false,
+      'range_flg': 'off',
       'value1': ''
     },
     'field_name': '本文'
@@ -274,7 +274,7 @@ exports.global_search_conditions_table = {
     'type': 'date',
     'field_set': {
       'field': 'publish_date',
-      'range_flg': true,
+      'range_flg': 'on',
       'value1': '',
       'value2': ''
     },
@@ -284,7 +284,7 @@ exports.global_search_conditions_table = {
     'type': 'text',
     'field_set': {
       'field': 'issuer',
-      'range_flg': false,
+      'range_flg': 'off',
       'value1': ''
     },
     'field_name': '発行者'
@@ -800,8 +800,8 @@ var search_conditions_add = function search_conditions_add(search_group_id) {
   search_conditions_tag.classList.add('p-search_conditions'); //selectタグを作成。またその中にoptionタグを追加していく。
 
   var select_tag = document.createElement('select');
-  select_tag.classList.add('p-search_conditions__field_select');
-  select_tag.name = 'Filed';
+  select_tag.classList.add('p-search_conditions__field_select'); //select_tag.name = 'Filed';
+
   var lists = [{
     'op_num': 0,
     'op_case': '件名or本文',
@@ -1151,15 +1151,14 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.input_check = void 0;
-/**
- * @param
- * @param
+/** 画面の入力内容をチェックする。エラーがあった場合、error_flg
+ * @param 検索グループ・検索条件を解析して配列にしたデータ(input_list)
  */
 
 var input_check = function input_check(input_list) {
   //とりあえず後回し
   return {
-    "error_flg": "off"
+    "error_flg": false
   };
 };
 
@@ -1183,50 +1182,37 @@ exports.input_get = void 0;
 var _global_1 = __webpack_require__(/*! ../global/_global */ "./app/static/ts/global/_global.ts"); //グローバル変数
 
 /**
- * @param
- * @param
+ * 検索グループと検索条件より、サーバーへのクエリーに必要な情報を配列として生成する。
+ * @param なし
  */
 
 
 var input_get = function input_get() {
-  var elems = document.getElementById('search_conditions_top'); //検索条件全体を取得
+  var input_lists = [['search_group_1']]; //クエリーを生成するための配列を宣言
 
-  var grp_check_flg = true;
-  var x = 0; //クエリーを生成するための配列を宣言
+  var search_group_check_flg = true; //search_group_analysis内に、検索グループが残っている場合はtrue、残っていない場合false
 
-  var input_lists = [['search_group_1']];
-  var grp_analysis = []; //グループ1の要素から解析。
+  var analysis_result = []; //グループ1の要素から解析。
 
-  while (grp_check_flg) {
-    //solr_query_listを順に検査し、group_*の有無をチェックする。
-    grp_check_flg = false;
+  while (search_group_check_flg) {
+    //solr_query_listを順に検査し、検索グループが残っていないかチェック
+    search_group_check_flg = false;
 
     for (var i = 0; i < input_lists.length; i++) {
       if (toString.call(input_lists[i]) == '[object Array]') {
         //input_lists内に配列がある（まだ置き換えられていないグループがある）場合。
-        grp_check_flg = true;
-        grp_analysis = []; //結果の格納エリアを初期化
+        search_group_check_flg = true;
+        analysis_result = []; //結果の格納エリアを初期化
 
-        group_analysis(input_lists[i][0], grp_analysis); //グループを解析して、配列にして返す。
+        group_analysis(input_lists[i][0], analysis_result); //グループを解析して、配列にして返す。
 
         input_lists.splice(i, 1); //グループ部分を配列より除去
 
-        Array.prototype.splice.apply(input_lists, [i, 0].concat(grp_analysis)); //除去した部分にを挿入
+        Array.prototype.splice.apply(input_lists, [i, 0].concat(analysis_result)); //除去した部分にを挿入
       }
     }
-    /*x++
-    if (x >= 10) {
-        break;
-    }*/
-
   }
-  /*for(let elem of search_group){
-      console.log(elem);
-  }*/
-  //console.log(search_conditions_top);
 
-
-  console.log(input_lists);
   return input_lists;
 };
 
@@ -1235,88 +1221,43 @@ exports.input_get = input_get;
  * 返す配列には、要素がグループであればグループ名、検索条件であれば、そのクエリーを設定する。
  */
 
-function group_analysis(grp_name, grp_analysis) {
-  var grp_elem = document.getElementById(grp_name); //引数より渡されたグループ名を検索。(filedsetタグ)
-  //console.log(grp_elem);
-  //console.log(grp_elem.children);
+function group_analysis(search_group_id, analysis_result) {
+  analysis_result.push('('); //リストの末尾にグループの閉じ括弧を追加。
 
-  var now = new Date();
-  var search_field_num = 0; //selectタグのoptionで選択されているvalueを保存するワーク。
+  var legend_tag = document.querySelector('#' + search_group_id + '>legend');
+  var conjunction = legend_tag.innerHTML.match(/AND/) == null ? ' OR ' : ' AND ';
+  var conditions_or_groups = document.querySelectorAll('#' + search_group_id + '>.p-search_conditions ,' + '#' + search_group_id + '>.c-search_group');
+  conditions_or_groups.forEach(function (condition_or_group) {
+    if (condition_or_group.classList.contains('p-search_conditions')) {
+      //検索条件の場合
+      var select_tag = condition_or_group.querySelector('select');
+      var input_tags = condition_or_group.querySelectorAll('input'); //選択されたfieldに応じた雛形のfield_setを取得　※値渡し
 
-  var conjunction = ''; //現在分析中のグループのand/orの接続詞を保存するエリア。
+      var field_set = {
+        'field_set': Object.assign({}, _global_1.global_search_conditions_table[select_tag['value']]['field_set'])
+      };
 
-  grp_analysis.push('('); //リストの先頭にグループの括弧を追加。
-  //for (let elem of grp_elem.children){     //fieldsetの子要素（孫は含まない）を順に処理する。
-
-  for (var i = 0; i < grp_elem.childElementCount; i++) {
-    //fieldsetの子要素（孫は含まない）を順に処理する。
-    var grp_child_elem = grp_elem.children[i];
-
-    if (grp_child_elem['tagName'] == 'LEGEND') {
-      //グループのクラス名に、or,andのどちらがあるか確認。
-      if (grp_child_elem.innerHTML.indexOf('Or結合', 0) >= 0) {
-        conjunction = ' OR ';
-      } else if (grp_child_elem.innerHTML.indexOf('And結合', 0) >= 0) {
-        conjunction = ' AND ';
+      if (input_tags[0]['type'] == 'text') {
+        //{field_set : {field : フィールド名,range_flg:off,value1:値,}}
+        field_set['field_set']['value1'] = input_tags[0]['value'];
+        analysis_result.push(field_set);
+        analysis_result.push(conjunction); //最後に接続詞（and/or）を追加。
+      } else if (input_tags[0]['type'] == 'date') {
+        //日付はまだ未実装
+        field_set['field_set']['value1'] = input_tags[0]['value'];
+        field_set['field_set']['value2'] = input_tags[1]['value'];
+        field_set['field_set']['range_flg'] = 'on';
+        analysis_result.push(field_set);
+        analysis_result.push(conjunction); //最後に接続詞（and/or）を追加。
       }
-    } else if (grp_child_elem['tagName'] == 'DIV') {
-      //検索条件div
-      for (var idx_div_child = 0; idx_div_child < grp_child_elem.childElementCount; idx_div_child++) {
-        var div_child_elem = grp_child_elem.children[idx_div_child];
-        _global_1.global_search_conditions_table;
-
-        if (div_child_elem['tagName'] == 'SELECT') {
-          search_field_num = div_child_elem['value'];
-        } else if (div_child_elem['tagName'] == 'INPUT' && div_child_elem['type'] == 'text') {
-          //{field_set : {field : フィールド名,range_flg:off,value1:値,}}
-          var field_set = {
-            'field_set': _global_1.global_search_conditions_table[search_field_num]['field_set']
-          };
-          field_set['field_set']['value1'] = div_child_elem['value'];
-          grp_analysis.push(field_set);
-          grp_analysis.push(conjunction); //最後に接続詞（and/or）を追加。
-        } else if (div_child_elem['tagName'] == 'INPUT' && div_child_elem['type'] == 'date') {
-          //日付はまだ未実装
-          //publish_date :[2019-01-01T00:00:00Z TO 2019-01-31T23:59:59Z] 範囲指定の仕方
-          var wk_sch_date_from;
-          var wk_sch_date_to;
-
-          if (search_field_num == 3 && div_child_elem['name'].substring(0, 13) == "sch_date_from") {
-            if (div_child_elem['value'] == "") {
-              wk_sch_date_from = "1990-1-1";
-            } else {
-              wk_sch_date_from = div_child_elem['value'];
-            }
-          } else {
-            if (div_child_elem['value'] == "") {
-              wk_sch_date_to = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
-            } else {
-              wk_sch_date_to = div_child_elem['value'];
-            }
-
-            grp_analysis.push("publish_date:[" + wk_sch_date_from + "T00:00:00Z TO " + wk_sch_date_to + "T23:59:59Z]");
-            grp_analysis.push(conjunction); //最後に接続詞（and/or）を追加。
-          }
-        }
-        /*
-        }else if(div_child_elem.tagName == 'INPUT' && div_child_elem.type == 'checkbox' && div_child_elem.value == 'not_search'){
-            console.log('a3 '+div_child_elem.tagName+' '+div_child_elem.type+''+div_child_elem.value);
-        }else{
-            console.log('a4 '+div_child_elem.tagName+' '+div_child_elem.type);
-        }
-        */
-
-      }
-    } else if (grp_child_elem['tagName'] == 'FIELDSET') {
-      grp_analysis.push([grp_child_elem['name']], conjunction);
+    } else {
+      //検索グループの場合、検索グループIDを設定（再度実行させる）
+      analysis_result.push([condition_or_group.id], conjunction);
     }
-  }
+  });
+  analysis_result.pop(); //末尾に追加された余計なand/orを削除。
 
-  grp_analysis.pop(); //末尾に追加された余計なand/orを削除。
-
-  grp_analysis.push(')'); //リストの末尾にグループの閉じ括弧を追加。
-
-  console.log(grp_analysis);
+  analysis_result.push(')'); //リストの末尾にグループの閉じ括弧を追加。
 }
 
 /***/ }),
@@ -1336,9 +1277,8 @@ exports.query = void 0;
 
 var _result_news_clip_1 = __webpack_require__(/*! ./_result_news_clip */ "./app/static/ts/search/_result_news_clip.ts"); //news_clipへの検索結果を画面に編集する。
 
-/**
- * @param
- * @param
+/** サーバーのAPIへリクエストデータを送る。
+ * @param サーバーのAPIへ渡すjsonデータ
  */
 
 
@@ -1346,13 +1286,12 @@ var query = function query(search_conditions_json) {
   var xhr_request = new XMLHttpRequest();
   xhr_request.onreadystatechange = result; //戻り値を処理する関数
 
-  xhr_request.open('POST', 'http://localhost:8000/news_clip', true);
+  xhr_request.open('POST', window.location.origin + '/news_clip', true);
   xhr_request.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
   xhr_request.responseType = 'json';
   xhr_request.send(JSON.stringify(search_conditions_json));
-  /**
-  * @param
-  * @param
+  /** コールバック関数：サーバーからのレスポンスを処理する。
+  * @param なし
   */
 
   function result() {
@@ -1363,15 +1302,6 @@ var query = function query(search_conditions_json) {
 };
 
 exports.query = query;
-/*recode:[
-    'title':recode['title'],
-    'article':recode['article'],
-    'url':recode['url'],
-    'publish_date':datetime.strftime(parser.parse(recode['publish_date']),'%Y-%m-%d %H:%M'),
-    'issuer':recode['issuer'][0],
-    'update_count':recode['update_count'],
-  ]
-*/
 
 /***/ }),
 
@@ -1388,21 +1318,25 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports.result_news_clip = void 0;
 /**
- * @param
- * @param
+ * サーバーからのレスポンスを保管庫へ表示させる。
+ * @param 検索結果のレコード(recodes)
  */
 
 var result_news_clip = function result_news_clip(recodes) {
-  var get_hokanko_elem = document.getElementsByClassName("hokanko");
+  var get_hokanko_elem = document.querySelector(".hokanko"); //getElementsByClassName("hokanko");
+
+  if (typeof get_hokanko_elem.innerHTML != 'undefined') {
+    get_hokanko_elem.innerHTML = '';
+  }
+
+  ;
 
   for (var _i = 0, recodes_1 = recodes; _i < recodes_1.length; _i++) {
     var recode = recodes_1[_i];
     var element_title = document.createElement('p');
-    element_title.innerHTML = recode['title'];
-    get_hokanko_elem[0].appendChild(element_title);
-  } //let t = xhr_request.response['title'] + ' : ' + xhr_request.response['name'];
-  //get_hokanko_elem.innerHTML = t;
-
+    element_title.innerHTML = recode['publish_date'] + ' | ' + recode['title'];
+    get_hokanko_elem.appendChild(element_title);
+  }
 };
 
 exports.result_news_clip = result_news_clip;
@@ -1440,7 +1374,7 @@ var _create_json_form_input_1 = __webpack_require__(/*! ./_create_json_form_inpu
 var _query_1 = __webpack_require__(/*! ./_query */ "./app/static/ts/search/_query.ts");
 /**
  * 入力フィールドより検索条件を取得し、検索を実行する。
- * @param search_destination 検索先を指定する（site,twitterなど）。
+ * @param search_destination 検索先を指定する(news_clip,twitterなど)。
  */
 
 
@@ -1449,7 +1383,7 @@ var search_main = function search_main(search_destination) {
 
   var error = _input_check_1.input_check(input_list);
 
-  if (error['error_flg'] == 'on') {} else {
+  if (error['error_flg']) {} else {
     var search_conditions_json = _create_json_form_input_1.create_json_form_input(input_list);
 
     _query_1.query(search_conditions_json);

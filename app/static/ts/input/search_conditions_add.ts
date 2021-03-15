@@ -41,7 +41,7 @@ export const search_conditions_add = (search_group_id: string): void => {
     //selectタグを作成。またその中にoptionタグを追加していく。
     let select_tag = document.createElement('select');
     select_tag.classList.add('p-search_conditions__field_select');
-    select_tag.name = 'Filed';
+    //select_tag.name = 'Filed';
     let lists = [       //optionタグの内容を配列・連想配列で生成
         { 'op_num': 0, 'op_case': '件名or本文', 'selected': true },
         { 'op_num': 1, 'op_case': '件名' },

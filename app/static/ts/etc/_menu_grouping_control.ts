@@ -1,7 +1,7 @@
 /**
  * 各検索グループ内で要素(検索条件と検索グループ)の数が３を超えた場合にのみグループ化のメニューを表示する。
  * 要素が３未満の場合はグループメニューより検索条件グループ化のメニューを非表示にする。
- * @param コントロールしたい検索グループID(search_group_id)
+ * @param search_group_id コントロールしたい検索グループID
  */
 export const menu_grouping_control = (search_group_id: string): void => {
 
@@ -13,7 +13,6 @@ export const menu_grouping_control = (search_group_id: string): void => {
 
     conditions_or_groups.forEach(condition_or_group => {
         let menu_list = document.querySelector('#' + condition_or_group.id + '_menu_list .p-operation_menu__li--DOM__type1');
-        console.log(menu_list.classList.contains('u-display--none'));
         if (conditions_or_groups.length < 3) {
             menu_list.classList.add('u-display--none');
         } else {

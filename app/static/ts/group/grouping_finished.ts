@@ -6,11 +6,10 @@ import {menu_grouping_control} from '../etc/_menu_grouping_control';
  * 選択された２つの検索条件間の検索条件を全て、新しい検索グループの中へ移動する。
  * 新しい検索グループは、選択された検索条件の下とする。
  * チェックが１つもなかった場合、キャンセルとして処理する。
- * @param 検索グループID(search_group_id)
+ * @param search_group_id 検索グループID
  */
 export const grouping_finished = (): void => {
 
-    //let search_conditions = document.querySelectorAll('#' + search_group_id + '>.p-search_conditions');
     let conditions_or_groups = document.querySelectorAll(
         '#' + global_string['global_grouping_id'] + '>.p-search_conditions,' +
         '#' + global_string['global_grouping_id'] + '>.c-search_group'
@@ -39,6 +38,9 @@ export const grouping_finished = (): void => {
     });
 
     if (move_target.length > 0) { group_add(insertion_position, move_target); }
+
+    //グループ内の要素数（検索グループと検索条件の合計）に応じた措置を実施する。
     menu_grouping_control(global_string['global_grouping_id']);
+    //グループ化が終了したことをグローバル変数へ記録
     global_string_edit('global_grouping_id', '');
 }

@@ -12,8 +12,6 @@
 @import "foundation/_f-palette.scss";       //function : パレット→利用可能な各色を定義
 @import "foundation/_f-colors.scss";        //map : 当プロジェクトで使用する色を上記のパレットより割当
 @import "foundation/_f-font-size.scss";     //map : 当プロジェクトで使用するフォントサイズを定義
-@import "foundation/_f-frame.scss";         //mixin : 当プロジェクトで使用する区切り線を定義
-@import "foundation/_f-input-form.scss";    //mixin : 当プロジェクトで使用するインプットフォームを定義
 // ===============================================================
 // Layout
 // ===============================================================
@@ -24,13 +22,7 @@
 // --------------------------------------------
 // Component
 // --------------------------------------------
-@import "object/component/_c-search_conditions.scss";
 @import "object/component/_c-search_group.scss";
-@import "object/component/_c-grouping_select.scss";
-@import "object/component/_c-button.scss";
-
-//@import "object/component/_c-test.scss";
-
 
 // --------------------------------------------
 // Project

@@ -2,7 +2,6 @@ import { global_search_conditions_table } from '../global/_global';    //グロ�
 
 /**
  * 検索グループと検索条件より、サーバーへのクエリーに必要な情報を配列として生成する。
- * @param なし
  */
 export const input_get = (): Array<any> => {
 

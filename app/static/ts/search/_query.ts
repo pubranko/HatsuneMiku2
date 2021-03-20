@@ -1,8 +1,8 @@
 import {result_news_clip} from './_result_news_clip';   //news_clipへの検索結果を画面に編集する。
 
-
-/** サーバーのAPIへリクエストデータを送る。
- * @param サーバーのAPIへ渡すjsonデータ
+/**
+ * サーバーのAPIへリクエストデータを送る。
+ * @param search_conditions_json サーバーのAPIへ渡すjsonデータ
  */
 export const query = (search_conditions_json: {}): void => {
 

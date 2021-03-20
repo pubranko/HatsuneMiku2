@@ -1,10 +1,10 @@
 /**
- * サーバーからのレスポンスを保管庫へ表示させる。
+ * サーバーからのレスポンスを保管庫へ表示させる。(暫定)
  * @param 検索結果のレコード(recodes)
  */
 export const result_news_clip = (recodes:[]): void => {
 
-    let get_hokanko_elem = document.querySelector(".hokanko"); //getElementsByClassName("hokanko");
+    let get_hokanko_elem = document.querySelector(".hokanko");
     if(typeof get_hokanko_elem.innerHTML != 'undefined'){
         get_hokanko_elem.innerHTML = '';
     };

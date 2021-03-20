@@ -1,13 +1,13 @@
 import { global_runing_events } from '../global/_global';    //グローバル変数
 
 /**
- * 検索条件メニューの表示/非表示の切り替えを行う。
- * @param 選択対象の検索条件id(search_conditions_id)
+ * 指定されたメニューの表示/非表示の切り替えを行う。。
+ * @param selected_id 対象のID(検索条件IDまたは0検索グループID)
  */
-export const search_conditions_menu_swich = (search_conditions_id: string): void => {
+export const menu_swich = (selected_id: string): void => {
 
-    let menu_list = document.querySelector('#' + search_conditions_id + '_menu_list');
-    let menu_list_ul = menu_list.querySelector('.p-operation_menu__ul');
+    let menu_list = document.querySelector('#' + selected_id + '_menu_list');
+    let menu_list_ul = menu_list.querySelector("[class^='p-operation_menu__ul']");
 
     //実行中のメニューは非表示にしないよう実行中イベントへ登録
     global_runing_events.push(menu_list_ul.id);

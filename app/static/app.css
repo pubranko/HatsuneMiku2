@@ -373,112 +373,12 @@ body {
 3. タイプ番号(ボタンの種類を分けたい場合)
 4. 枝番(同一タイプ内でアクションによって色分けしたい場合など)
 */
-/*ここは枠線のmixinを定義する。
-  基本的に、単純な枠で括りたい場合の枠線のみ。
-  ボタンの枠など、パーツ固有の枠はそれぞれのパーツに定義する。
-*/
-/*ここは入力フィールドのmixinを定義する。*/
-/*検索条件*/
-.c-search_conditions--type2, .c-search_conditions--type1 {
-  display: block;
-}
-
-.c-search_conditions--type1 {
-  background-color: #b3e5fc;
-  /*&:hover,
-  &:active {
-      background-color: map-get($colors,search_conditions_background--type2); //文字色
-      cursor        : pointer;     //カーソル : ボタン上のマウスの形を変える
-  }*/
-}
-
-.c-search_conditions--type2 {
-  background-color: #03a9f4;
-  /*&:hover,
-  &:active {
-      background-color: map-get($colors,search_conditions_background--type2); //文字色
-      cursor        : pointer;     //カーソル : ボタン上のマウスの形を変える
-  }*/
-}
-
 .c-search_group {
   display: inline-block;
   padding-right: 2rem;
   border: 0.1rem solid #3f51b5;
 }
 
-.c-grouping_select--type2, .c-grouping_select--type1 {
-  display: block;
-}
-
-.c-grouping_select--type1 {
-  background-color: #b3e5fc;
-}
-
-.c-grouping_select--type2 {
-  background-color: #03a9f4;
-}
-
-/*
-*   ボタンの定義
-*/
-/* ボタン （aタグ、buttonタグに利用可） */
-.c-button--type2-5, .c-button--type2-4, .c-button--type2-3, .c-button--type2-2, .c-button--type2-1 {
-  display: inline-block;
-  padding: 1.1rem 1rem;
-  border: 0.2rem solid #f57c00;
-  /* 枠の指定 */
-  box-shadow: 0rem 0rem 0.3rem 0.1rem #e65100, 0rem 0rem 0.3rem 0.1rem #e65100 inset;
-  border-radius: 5%;
-  background: rgba(0, 0, 0, 0);
-  font-size: 1.5rem;
-  text-align: center;
-  color: #ff9800;
-  transition: 0.3s;
-}
-.c-button--type2-5:hover, .c-button--type2-4:hover, .c-button--type2-3:hover, .c-button--type2-2:hover, .c-button--type2-1:hover, .c-button--type2-5:active, .c-button--type2-4:active, .c-button--type2-3:active, .c-button--type2-2:active, .c-button--type2-1:active {
-  color: #303f9f;
-  background: #ff9800;
-  cursor: pointer;
-}
-
-.c-button--type2-2 {
-  display: block;
-  padding: 0.3rem 1rem;
-  font-size: 1.2rem;
-}
-
-.c-button--type2-3 {
-  display: block;
-  padding: 0.1rem 1rem;
-  font-size: 1.2rem;
-}
-
-.c-button--type2-4 {
-  padding: 0.1rem 1rem;
-  font-size: 1.2rem;
-}
-
-.c-button--type2-5 {
-  padding: 0rem 1rem;
-  font-size: 1rem;
-}
-
-/*タイプ３*/
-.c-button--type3 {
-  border-radius: 50%;
-  line-height: 100px;
-  width: 100px;
-  height: 100px;
-  padding: 0;
-  box-shadow: 0 5px 0 #e6d900;
-}
-.c-button--type3:hover {
-  transform: translate(0, 3px);
-  box-shadow: 0 2px 0 #e6d900;
-}
-
-/*-----*/
 /*検索条件*/
 .p-search_conditions {
   display: block;

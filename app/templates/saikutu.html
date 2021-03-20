@@ -1,9 +1,6 @@
 {#共通のヘッダー#}
 {% include "header.html" %}
 
-{#% load static %#}
-{#<img src="{% static 'saikutu/images/〜〜.gif' %}" alt="画像を表示のつもり">#}
-
 <h4>採掘しよう！</h4>
 
 <div>
@@ -11,8 +8,6 @@
         <legend>検索条件入力欄</legend>
     </fieldset>
 
-    <!--div id="search_conditions_top">
-    </div-->
     <input type="button" value="検索" onclick="search_main('news_clip')">
     <br>
     <a>表示する件数</a><input type="text" value="10" class="page_max_lines">

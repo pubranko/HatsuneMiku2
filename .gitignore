@@ -4,6 +4,10 @@
 #npm関連を除外
 node_modules/
 
+#暗号鍵　.pem、.jks
+*.pem
+*.jks
+
 #特定の拡張子を除外
 #例 *.exe
 
